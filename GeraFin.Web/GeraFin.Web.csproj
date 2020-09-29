@@ -1,0 +1,295 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <MvcRazorExcludeViewFilesFromPublish>false</MvcRazorExcludeViewFilesFromPublish>
+    <RuntimeFrameworkName>Microsoft.AspNetCore.App</RuntimeFrameworkName>
+    <UserSecretsId>aspnet-GeraFin-10F86EC1-A7B9-40B3-A943-2C9C114B0BDE</UserSecretsId>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <StartupObject />
+    <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;1071</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AddRazorSupportForMVC>true</AddRazorSupportForMVC>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ChatHub\**" />
+    <Compile Remove="wwwroot\adminlte\components\bootstrap-datepicker\tests\**" />
+    <Compile Remove="wwwroot\adminlte\components\chart.js\**" />
+    <Compile Remove="wwwroot\adminlte\components\ckeditor\samples\**" />
+    <Compile Remove="wwwroot\adminlte\components\datatables.net-bs\**" />
+    <Compile Remove="wwwroot\adminlte\components\datatables.net\**" />
+    <Compile Remove="wwwroot\adminlte\components\Flot\examples\**" />
+    <Compile Remove="wwwroot\adminlte\components\jquery-slimscroll\examples\**" />
+    <Compile Remove="wwwroot\adminlte\components\jvectormap\tests\**" />
+    <Compile Remove="wwwroot\adminlte\components\mocha\**" />
+    <Compile Remove="wwwroot\adminlte\components\morris.js\examples\**" />
+    <Compile Remove="wwwroot\adminlte\components\select2\**" />
+    <Compile Remove="wwwroot\content\ejservices\**" />
+    <EmbeddedResource Remove="ChatHub\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\bootstrap-datepicker\tests\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\chart.js\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\ckeditor\samples\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\datatables.net-bs\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\datatables.net\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\Flot\examples\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\jquery-slimscroll\examples\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\jvectormap\tests\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\mocha\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\morris.js\examples\**" />
+    <EmbeddedResource Remove="wwwroot\adminlte\components\select2\**" />
+    <EmbeddedResource Remove="wwwroot\content\ejservices\**" />
+    <None Remove="ChatHub\**" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\tests\**" />
+    <None Remove="wwwroot\adminlte\components\chart.js\**" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\samples\**" />
+    <None Remove="wwwroot\adminlte\components\datatables.net-bs\**" />
+    <None Remove="wwwroot\adminlte\components\datatables.net\**" />
+    <None Remove="wwwroot\adminlte\components\Flot\examples\**" />
+    <None Remove="wwwroot\adminlte\components\jquery-slimscroll\examples\**" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\tests\**" />
+    <None Remove="wwwroot\adminlte\components\mocha\**" />
+    <None Remove="wwwroot\adminlte\components\morris.js\examples\**" />
+    <None Remove="wwwroot\adminlte\components\select2\**" />
+    <None Remove="wwwroot\content\ejservices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Api\MailBoxController.cs" />
+    <Compile Remove="Controllers\MailBoxController.cs" />
+    <Compile Remove="Controllers\SMTPController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\.editorconfig" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\.jshintrc" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\.npmignore" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\.travis.yml" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\composer.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\CONTRIBUTING.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\Gruntfile.js" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\index.html" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\package.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\README.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\serve.js" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-colorpicker\yarn.lock" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\.editorconfig" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\.travis.yml" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\CHANGELOG.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\CODE_OF_CONDUCT.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\composer.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\CONTRIBUTING.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\Gruntfile.js" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\package.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\README.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-datepicker\yarn.lock" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-timepicker\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-timepicker\bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-timepicker\CHANGELOG.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-timepicker\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\bootstrap-timepicker\README.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\bower.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\CHANGELOG.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\Gemfile" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\Gemfile.lock" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\Gruntfile.js" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\ISSUE_TEMPLATE.md" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\package-lock.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\package.js" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\package.json" />
+    <None Remove="wwwroot\adminlte\components\bootstrap\README.md" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\bower.json" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\CHANGES.md" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\composer.json" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\config.js" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\contents.css" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\LICENSE.md" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\package.json" />
+    <None Remove="wwwroot\adminlte\components\ckeditor\README.md" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\bower.json" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\component.json" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\e.html" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\package.json" />
+    <None Remove="wwwroot\adminlte\components\eve-raphael\README.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\Flot\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\Flot\.travis.yml" />
+    <None Remove="wwwroot\adminlte\components\Flot\API.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\component.json" />
+    <None Remove="wwwroot\adminlte\components\Flot\CONTRIBUTING.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\FAQ.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\flot.jquery.json" />
+    <None Remove="wwwroot\adminlte\components\Flot\LICENSE.txt" />
+    <None Remove="wwwroot\adminlte\components\Flot\Makefile" />
+    <None Remove="wwwroot\adminlte\components\Flot\NEWS.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\package.json" />
+    <None Remove="wwwroot\adminlte\components\Flot\PLUGINS.md" />
+    <None Remove="wwwroot\adminlte\components\Flot\README.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\.editorconfig" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\.npmignore" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\bower.json" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\CONTRIBUTING.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\history.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\index.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\License.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\package.json" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\readme.md" />
+    <None Remove="wwwroot\adminlte\components\ion.rangeSlider\readme.ru.md" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\bower.json" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\cheatsheet.html" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\component.json" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\composer.json" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\Ionicons\readme.md" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\index.html" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\knob.jquery.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\package.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\README.md" />
+    <None Remove="wwwroot\adminlte\components\jquery-knob\secretplan.jpg" />
+    <None Remove="wwwroot\adminlte\components\jquery-slimscroll\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-slimscroll\bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-slimscroll\package.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-slimscroll\README.md" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\Changelog.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\Makefile" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\minheader.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\README.md" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\sparkline.jquery.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-sparkline\version.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\AUTHORS.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\component.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\composer.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\LICENSE.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\package.json" />
+    <None Remove="wwwroot\adminlte\components\jquery-ui\README.md" />
+    <None Remove="wwwroot\adminlte\components\jquery\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery\AUTHORS.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery\bower.json" />
+    <None Remove="wwwroot\adminlte\components\jquery\LICENSE.txt" />
+    <None Remove="wwwroot\adminlte\components\jquery\README.md" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\build.sh" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\jvectormap.jquery.json" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\LICENSE-AGPL" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\LICENSE-COMMERCIAL" />
+    <None Remove="wwwroot\adminlte\components\jvectormap\README.md" />
+    <None Remove="wwwroot\adminlte\components\morris.js\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\morris.js\.gitignore" />
+    <None Remove="wwwroot\adminlte\components\morris.js\.travis.yml" />
+    <None Remove="wwwroot\adminlte\components\morris.js\bower.json" />
+    <None Remove="wwwroot\adminlte\components\morris.js\bower.travis.json" />
+    <None Remove="wwwroot\adminlte\components\morris.js\morris.min.js" />
+    <None Remove="wwwroot\adminlte\components\morris.js\package.json" />
+    <None Remove="wwwroot\adminlte\components\morris.js\README.md" />
+    <None Remove="wwwroot\adminlte\components\PACE\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\PACE\bower.json" />
+    <None Remove="wwwroot\adminlte\components\PACE\install.json" />
+    <None Remove="wwwroot\adminlte\components\PACE\LICENSE" />
+    <None Remove="wwwroot\adminlte\components\PACE\pace.coffee" />
+    <None Remove="wwwroot\adminlte\components\PACE\pace.js" />
+    <None Remove="wwwroot\adminlte\components\PACE\pace.min.js" />
+    <None Remove="wwwroot\adminlte\components\PACE\README.md" />
+    <None Remove="wwwroot\adminlte\components\raphael\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\raphael\bower.json" />
+    <None Remove="wwwroot\adminlte\components\raphael\license.txt" />
+    <None Remove="wwwroot\adminlte\components\raphael\raphael.js" />
+    <None Remove="wwwroot\adminlte\components\raphael\raphael.min.js" />
+    <None Remove="wwwroot\adminlte\components\raphael\raphael.no-deps.js" />
+    <None Remove="wwwroot\adminlte\components\raphael\raphael.no-deps.min.js" />
+    <None Remove="wwwroot\adminlte\components\raphael\webpack.config.js" />
+    <None Remove="wwwroot\adminlte\components\raphael\yarn.lock" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\.bower.json" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\bower.json" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\CHANGELOG.md" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\composer.json" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\Gruntfile.js" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\LICENSE.md" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\package.json" />
+    <None Remove="wwwroot\adminlte\components\seiyria-bootstrap-slider\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\Ext\Lib\" />
+    <Folder Include="wwwroot\CustomToolBarIcons\" />
+    <Folder Include="wwwroot\stdout\" />
+    <Folder Include="wwwroot\upload\Excel\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.94.2" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy" Version="2.2.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="runtime.win-x64.Microsoft.NETCore.DotNetHostResolver" Version="2.2.0" />
+    <PackageReference Include="Sendgrid" Version="9.12.6" />
+    <PackageReference Include="Syncfusion.EJ.Export" Version="17.4.0.49" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="17.4.0.49" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="17.4.0.49" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\GeraFin.DAL\GeraFin.DAL.csproj" />
+    <ProjectReference Include="..\GeraFin.Models\GeraFin.Models.csproj" />
+    <ProjectReference Include="..\GeraFin.Services\GeraFin.Services.csproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <!--<VisualStudio>
+      <UserProperties properties_4launchsettings_1json__JsonSchema="" />
+    </VisualStudio>-->
+  </ProjectExtensions>
+  </Project>

@@ -1,0 +1,283 @@
+﻿body {
+    padding-top: 50px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+.GeraFinLogo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%
+}
+#content-Page-header {
+    border: double;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+/*#control-sidebar-theme-demo-options-tab {
+    border-bottom: 2px solid !important;
+    border-top: 2px solid !important;
+    border-left: 2px solid !important;
+    border-right: 2px solid !important
+}*/
+
+#Skins {
+    border-bottom: 2px solid !important;
+    font-size: 20px;
+    margin-left: auto;
+    text-align-last: center;
+    background-color: #3c8dbc;
+}
+.BoxList {
+    border-bottom: 2px solid !important;
+}
+.HeadingsSide {
+    font-size: 12px;
+}
+#GeneralSettings {
+    border-bottom: 2px solid !important;
+    font-size: 20px;
+    margin-left: auto;
+    text-align-last: center;
+    background-color: #3c8dbc;
+}
+
+.text-center no-margin {
+    font-size: 10px;
+}
+
+/*#SettngsTabContent {
+    border-bottom: 2px solid !important;
+    border-top: 2px solid !important;
+    border-left: 2px solid !important;
+    border-right: 2px solid !important
+}*/
+
+#control-sidebar-settings-tab {
+    border-bottom: 2px solid !important;
+    border-top: 2px solid !important;
+    border-left: 2px solid !important;
+    border-right: 2px solid !important
+}
+
+#SubmitBtn {
+    background: #3c8dbc;
+    color: white
+}
+#EnableAuthentication {
+    font-size: 12px;
+    font-family: Verdana
+}
+
+.box.box-solid {
+    border-top: 2px solid !important;
+    border-top-color: #3c8dbc !important;
+    border-left-color: #3c8dbc;
+    border-right-color: #3c8dbc;
+    border-bottom-color: #3c8dbc
+}
+
+@media (max-height: 1040 px) {
+    .col-md-9 {
+        height: 50%;
+    }
+}
+
+.fc-toolbar.fc-header-toolbar {
+    border-bottom: 2px solid !important;
+    border-bottom-color: #3c8dbc !important;
+}
+#calendar {
+    border-top-color: #3c8dbc !important;
+    border-left-color: #3c8dbc !important;
+    border-right-color: #3c8dbc !important;
+    border-bottom-color: #3c8dbc !important
+}
+
+.fc-view fc-month-view fc-basic-view {
+    border-top: 2px solid !important;
+    border-top-color: #3c8dbc !important;
+    border-left-color: #3c8dbc !important;
+    border-right-color: #3c8dbc !important;
+    border-bottom-color: #3c8dbc !important
+}
+#loader {
+    position: fixed;
+    left: 1px;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../../images/loading.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+
+#titlleRight_htmlSpan {
+    float: right;
+    margin-right: 50px;
+}
+
+#titlleLeft_htmlSpan {
+    float: left
+}
+#submitId {
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#TaskName {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+}
+
+/*.header-menu {
+    position: relative;
+    z-index: 5;
+    max-width: 80%;
+    margin: 0 auto 30px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.menu-toggle,
+.sublist-toggle {
+    display: none;
+}
+
+.header-menu > ul {
+    display: block !important; /* prevents toggle display:none on resize 
+    font-size: 0;
+}
+
+    .header-menu > ul.mobile {
+        display: none !important;
+    }
+
+    .header-menu > ul > li {
+        display: inline-block;
+        border-left: 1px solid #ddd;
+        padding: 0 15px;
+        vertical-align: middle;
+    }
+
+        .header-menu > ul > li:first-child {
+            border-left: none;
+        }
+
+        .header-menu > ul > li > a {
+            display: block;
+            padding: 5px 10px;
+            line-height: 20px;
+            font-size: 17px; 
+            color: #555;
+            cursor: pointer;
+        }
+
+            .header-menu > ul > li > a:hover {
+                color: #4ab2f1;
+            }
+
+.header-menu .sublist {
+    display: none;
+    position: absolute;
+    width: 200px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+    background-color: #fff;
+    padding: 10px 0;
+    text-align: left;
+}
+
+    .header-menu .sublist li {
+        position: relative;
+    }
+
+        .header-menu .sublist li a {
+            display: block;
+            position: relative;
+            padding: 10px 20px 10px 30px;
+            font-size: 14px;
+            color: #444;
+        }
+
+            .header-menu .sublist li a:before {
+                content: "";
+                position: absolute;
+                top: 17px;
+                left: 15px;
+                width: 5px;
+                height: 5px;
+                background-color: #ddd;
+            }
+
+        .header-menu .sublist li:hover > a {
+            background-color: #f6f6f6;
+        }
+
+.header-menu ul li:hover > .sublist {
+    display: block;
+}
+
+.header-menu .sublist .sublist {
+    top: -10px;
+    left: 100% !important;
+    
+}
+*/
+
+
+
+

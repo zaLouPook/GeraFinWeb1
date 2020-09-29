@@ -1,0 +1,14 @@
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:GeraFin.Controllers.AccountController._ClientId")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:GeraFin.Controllers.AccountController._RedirectUrl")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:GeraFin.Controllers.AccountController._SecretKey")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0067:Dispose objects before losing scope", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.GetuserProfile(System.String)~System.Threading.Tasks.Task{GeraFin.Models.ViewModels.Gmail.GmailUserProfile}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.Login(System.String)~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.IActionResult}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.LoginUsingGoogle(System.String,System.String)~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.ActionResult}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.SaveGoogleUser(System.String,System.String,System.String)~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.ActionResult}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0067:Dispose objects before losing scope", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.SaveGoogleUser(System.String,System.String,System.String)~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.ActionResult}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:GeraFin.Controllers.AccountController.LoginIfExternalProviderAlreadyAssignedAsync(System.String)~System.Threading.Tasks.Task{System.Boolean}")]

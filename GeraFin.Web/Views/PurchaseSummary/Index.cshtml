@@ -1,0 +1,154 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+   ViewData["Title"] = "Purchase Sumarry";
+}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <section class="content-header" id="content-Page-header">
+      <h1>
+         @ViewData["Title"]
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="#">@ViewData["Title"]</a></li>
+      </ol>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+      <!-- Default box -->
+      <div class="box">
+         <div class="box-header with-border">
+            <h3 class="box-title text-primary"><i class="fa fa-certificate"></i> @ViewData["Title"]</h3>
+            <div class="box-tools pull-right">
+               <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                       title="Collapse">
+                  <i class="fa fa-minus"></i>
+               </button>
+               <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                  <i class="fa fa-times"></i>
+               </button>
+            </div>
+         </div>
+         <div class="box-body">
+            <div id="Grid"></div>
+         </div>
+         <!-- /.box-body -->
+         <div class="box-footer">
+
+         </div>
+         <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+   </section>
+   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Styles{
+
+}
+
+@section Scripts{
+
+   <script type="text/javascript">
+
+       var Permission = @Convert.ToBoolean(HttpContextAccessor.HttpContext.Session.GetInt32("_IsAdmin")).ToString().ToLower();
+       var BranchId = @Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"));
+
+        $(function () {
+
+            var dataManager = ej.DataManager({
+                url: "/api/PurchaseSummary",
+                adaptor: new ej.WebApiAdaptor(),
+                offline: true
+            });
+
+            var dataManagerBranch = ej.DataManager({
+                url: "/api/Branch",
+                adaptor: new ej.WebApiAdaptor()
+            });
+
+            dataManager.ready.done(function (e) {
+                $("#Grid").ejGrid({
+                    dataSource: ej.DataManager({
+                        json: e.result,
+                        adaptor: new ej.remoteSaveAdaptor(),
+                        insertUrl: "/api/PurchaseSummary/Insert",
+                        updateUrl: "/api/PurchaseSummary/Update",
+                        removeUrl: "/api/PurchaseSummary/Remove",
+                    }),
+                    toolbarSettings: {
+                        showToolbar: true,
+                        toolbarItems: ["add", "edit", "delete", "update", "cancel", "search", "printGrid"]
+                    },
+                    editSettings: {
+                        allowEditing: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        showDeleteConfirmDialog: false,
+                        editMode: "dialog"
+                   },
+
+                   toolbarClick: function (args) {
+                      if (args.itemName == 'Delete' && this.getSelectedRecords().length) {
+                         $("#modal-info").modal()
+                      }
+                   },
+
+                    isResponsive: true,
+                    enableResponsiveRow: true,
+                    allowSorting: true,
+                    allowSearching: true,
+                    allowFiltering: true,
+                    filterSettings: {
+                        filterType: "excel",
+                        maxFilterChoices: 100,
+                        enableCaseSensitivity: false
+                    },
+
+                   allowPaging: true,
+                   pageSettings: {
+                      pageSize: 25, printMode: ej.Grid.PrintMode.AllPages
+                   },
+
+                   columns: [
+                        { headerText: 'Detail', template: "<a href='/PurchaseSummary/Detail/?id={{:InvoiceOrderId}}'>Detail</a>" },
+                        { field: "InvoiceOrderId", headerText: 'IN Id', isPrimaryKey: true, isIdentity: true, visible: false },
+                        { field: "InvoiceOrderName", headerText: 'IN#', allowEditing: false },
+                        { field: "BranchId", headerText: 'Unit', foreignKeyField: "BranchId", defaultValue:BranchId, foreignKeyValue: "BranchName", dataSource: dataManagerBranch, validationRules: { required: true }, visible: Permission },
+                        { field: "OrderDate", headerText: 'Week Start', editType: "datepicker", format: "{0:yyyy-MM-dd}", validationRules: { required: true } },
+                        { field: "DeliveryDate", headerText: 'Week End', editType: "datepicker", format: "{0:yyyy-MM-dd}", validationRules: { required: true } },
+                        { field: "CustomerRefNumber", headerText: 'Cust. Ref#', validationRules: { required: true }, allowEditing: false },
+                    ],
+                    actionComplete: "complete",
+                });
+            });
+        });
+
+        function complete(args) {
+            if (args.requestType == 'beginedit') {
+                $("#" + this._id + "_dialogEdit").ejDialog({ title: "Edit Record" });
+            }
+            if (args.requestType == 'beginedit' || args.requestType == 'add') {
+                $('#GridBranchId').ejDropDownList({ change: 'branchDdlChange' });
+            }
+        }
+
+        //function branchDdlChange(e) {
+        //    $.ajax({
+        //        url: '/api/Currency/GetByBranchId/' + e.selectedValue,
+        //        type: 'GET',
+        //        success: function (data) {
+        //            $("#GridCurrencyId").ejDropDownList({
+        //                dataSource: [data],
+        //                fields: { id: 'CurrencyId', text: 'CurrencyCode', value: 'CurrencyId' },
+        //                value: data.CurrencyId
+        //            });
+        //        }
+        //    })
+        //}
+   </script>
+}
+
+

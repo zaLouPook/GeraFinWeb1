@@ -1,0 +1,455 @@
+﻿@using System.Linq;
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+
+@{ 
+    int BranchId = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"));
+    Branch branch = context.Branch.SingleOrDefault(x => x.BranchId == BranchId);
+    Vendor vendor = context.Vendor.SingleOrDefault(x => x.VendorId == Model.VendorId);
+}
+
+
+@model GeraFin.Models.ViewModels.GeraFinWeb.PurchaseOrder
+
+@{
+   ViewData["Title"] = "Purchase Order Detail";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <section class="content-header" id="content-Page-header">
+      <h1>
+         @ViewData["Title"]
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="/PurchaseOrder/Index">Purchase Order</a></li>
+         <li><a href="/PurchaseOrder/Detail/?id=@Model.PurchaseOrderId#">@ViewData["Title"]</a></li>
+      </ol>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+      <!-- Default box -->
+      <div class="box" id="GeraFinTop">
+         <div class="Invoice-logo" id="Invoicelogo">
+            <table style=" width: 100%; border: 3px solid;">
+               <tr style="background-color:#367fa9; color:#fff">
+                  <th width="50%">
+                     GERATEC
+                  </th>
+                  <th width="50%">
+                     PURCHASE ORDER
+                  </th>
+               </tr>
+               <tr>
+                  <td>
+                     PO Box 5342
+                  </td>
+                  <td>
+                     PO No: @Html.DisplayFor(model => model.PurchaseOrderName)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     Tyger Valley
+                  </td>
+                  <td>
+                     @{
+                        var OrderDate1 = Model.OrderDate.ToString("yyyy-MM-dd");
+                     }
+                     @Html.DisplayFor(model => OrderDate1)
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     7536
+                  </td>
+                  <td>
+                     @{
+                        string Status = "";
+                        if (Model.Recieved == false)
+                        {
+                           Status = "Not Recieved";
+                        }
+                        else
+                        {
+                           Status = "Recieved";
+                        }
+                     }
+                     PO Status: @Html.DisplayFor(model => Status)
+                  </td>
+               </tr>
+            </table>
+            <br />
+            <table style="width:100%; border:3px solid;">
+               <tr style="background-color:#367fa9; color:#fff">
+                  <th width="50%">
+                     Supplier
+                  </th>
+                  <th width="50%">
+                     Delivery Address
+                  </th>
+               </tr>
+               <tr>
+                  <td>@vendor.VendorName</td>
+                  <td>@branch.BranchName</td>
+               </tr>
+               <tr>
+                  <td>@vendor.Address</td>
+                  <td>@branch.Address</td>
+               </tr>
+               <tr>
+                  <td>@vendor.City</td>
+                  <td>@branch.City</td>
+               </tr>
+               <tr>
+                  <td>@vendor.ZipCode</td>
+                  <td>@branch.ZipCode</td>
+               </tr>
+               <tr style="background-color:white;">
+                  <td>
+                     -
+                  </td>
+                  <td>
+                     -
+                  </td>
+               </tr>
+               <tr>
+                  <th>
+                     <b>@vendor.Phone</b>
+                  </th>
+                  <td>
+                     <b>@branch.Phone</b>
+                  </td>
+               </tr>
+               <tr>
+                  <th>
+                     @vendor.Email
+                  </th>
+                  <td>
+                     <b>@branch.Email</b>
+                  </td>
+               </tr>
+            </table>
+            <br />
+            <table style="width:100%; border:3px solid;">
+               <tr style="background-color:#367fa9; color:#fff">
+                  <th>
+                     DELIVERY DATE
+                  </th>
+                  <th>
+                     REQUESTED BY
+                  </th>
+                  <th>
+                     APPROVED BY
+                  </th>
+                  <th>
+                     UNIT
+                  </th>
+               </tr>
+               <tr>
+                  <td>
+                     @{
+                        var DeliveryDate = Model.DeliveryDate.ToString("yyyy-MM-dd");
+                     }
+                     @Html.DisplayFor(model => DeliveryDate)
+                  </td>
+                  <td>
+                     @User.Identity.Name
+                  </td>
+                  <td>
+                     @User.Identity.Name
+                  </td>
+                  <td>
+                     @ViewBag.BranchName
+                  </td>
+               </tr>
+            </table>
+         </div>
+
+         <div class="box-body">
+            <div class="content-container-fluid">
+               <div class="row">
+
+               </div>
+            </div>
+         </div>
+         <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+
+      <div class="box" id="AppendBefore">
+         <div class="box-body">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div id="Grid"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-8">
+
+               </div>
+               <div class="col-lg-4">
+                  <table id="PrintTotals" style="width:100%; border:3px solid;">
+                     <tr style="background-color:#367fa9; color:#fff">
+                        <th style="width:33.3%">
+                           Amount
+                        </th>
+                        <th style="width:33.3%">
+                           SubTotal
+                        </th>
+                        <th style="width:33.3%">
+                           Total
+                        </th>
+                     </tr>
+                     <tr>
+                        <td id="Amount">R @Model.Amount</td>
+                        <td id="SubTotal">R @Model.SubTotal</td>
+                        <td id="Total">R @Model.Total</td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Styles{
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+        var Permission = @Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_IsAdmin")).ToString().ToLower();
+        var test = @Convert.ToInt32(Model.Recieved);
+
+        var data = true;
+        if (test == 1) {
+            data = false;
+        }
+        if (Permission == 1) {
+            data = true;
+        }
+
+        function create(args) {
+            $('#Grid_search').bind('keydown keyup', function (e) {
+                var gridObj = $("#Grid").data("ejGrid");
+                gridObj.search($(this).find(".e-gridsearchbar").val());
+            });
+            $("#Grid_search").find('.e-cancel').on('click', function () {
+                var grid = $(".e-grid").data('ejGrid');
+                grid.clearSearching();
+            })
+        }
+
+      function beforePrint(args) {
+         document.getElementById("AppendBefore").style.display = "none";
+         $("Invoice-logo").css('display', 'block');
+         args.element.prepend($(".box"));
+      }
+
+      $(function () {
+
+         var dataManager = ej.DataManager({
+            url: "/api/PurchaseOrderLine",
+            adaptor: new ej.WebApiAdaptor(),
+            headers: [{ "PurchaseOrderId": @Model.PurchaseOrderId}],
+            offline: true
+         });
+
+         var dataManagerPurchaseOrder = ej.DataManager({
+            url: "/api/PurchaseOrder",
+            adaptor: new ej.WebApiAdaptor()
+         });
+
+         var dataManagerProduct = ej.DataManager({
+            url: "/api/Product/GetProductByVendorId/?id=" + @Model.VendorId,
+            adaptor: new ej.WebApiAdaptor()
+         });
+
+         var dataManagerBranch = ej.DataManager({
+            url: "/api/Branch",
+            adaptor: new ej.WebApiAdaptor()
+         });
+
+         var dataManagerVendor = ej.DataManager({
+            url: "/api/Vendor",
+            adaptor: new ej.WebApiAdaptor()
+         });
+
+         var dataManagerPurchaseType = ej.DataManager({
+            url: "/api/PurchaseType",
+            adaptor: new ej.WebApiAdaptor()
+         });
+
+         $('#BranchId').ejDropDownList({
+            dataSource: dataManagerBranch,
+            fields: { id: 'BranchId', text: 'BranchName', value: 'BranchId' },
+            value: @Model.BranchId,
+            enabled: false,
+         });
+
+         $('#VendorId').ejDropDownList({
+            dataSource: dataManagerVendor,
+            fields: { id: 'VendorId', text: 'VendorName', value: 'VendorId' },
+            value: @Model.VendorId,
+            enabled: false,
+         });
+
+         $('#PurchaseTypeId').ejDropDownList({
+            dataSource: dataManagerPurchaseType,
+            fields: { id: 'PurchaseTypeId', text: 'PurchaseTypeName', value: 'PurchaseTypeId' },
+            value: @Model.PurchaseTypeId,
+            enabled: false,
+         });
+
+         dataManager.ready.done(function (e) {
+            $("#Grid").ejGrid({
+               dataSource: ej.DataManager({
+                  json: e.result,
+                  adaptor: new ej.remoteSaveAdaptor(),
+                  insertUrl: "/api/PurchaseOrderLine/Insert",
+                  updateUrl: "/api/PurchaseOrderLine/Update",
+                  removeUrl: "/api/PurchaseOrderLine/Remove",
+               }),
+
+                editSettings: {
+                    allowEditing: data,
+                    allowAdding: data,
+                    allowDeleting: data,
+                    showDeleteConfirmDialog: false,
+                },
+
+               toolbarClick: function (args) {
+                  if (args.itemName == 'Delete' && this.getSelectedRecords().length) {
+                     $("#modal-info").modal()
+                  }
+
+                  if (args.itemName == 'PDF Export') {
+
+                     var gridObj = $("#Grid").ejGrid("instance");
+
+                     console.log(gridObj);
+                     this.exportGrid(gridObj);
+                     //e.cancel = true;
+                  }
+               },
+
+               isResponsive: true,
+               enableResponsiveRow: true,
+               allowSorting: true,
+               allowFiltering: false,
+               sortSettings: { sortedColumns: [{ field: "ProductId", direction: "descending" }] },
+               allowSearching: true,
+               allowFiltering: false,
+               filterSettings: {
+                  filterType: "excel",
+                  maxFilterChoices: 100,
+                  enableCaseSensitivity: false
+               },
+
+               allowPaging: true,
+               allowPdfExport: true,
+               exportToPdfAction: 'http://' + window.location.host + '/' + 'api/PurchaseOrderLine/ExportToPdf',
+
+               pageSettings: {
+                  pageSize: 25, printMode: ej.Grid.PrintMode.AllPages
+               },
+
+               toolbarSettings: {
+                  showToolbar: true,
+                  toolbarItems: ["add", "edit", "delete", "update", "cancel", "search", "printGrid", ej.Grid.ToolBarItems.PdfExport],
+                  showStackedHeader: true,
+                  isResponsive: true,
+               },
+
+               columns: [
+                  { field: "PurchaseOrderLineId", headerText: 'Line Id', isPrimaryKey: true, isIdentity: true, visible: false },
+                  { field: "PurchaseOrderId", headerText: 'PO#', defaultValue: @Model.PurchaseOrderId, foreignKeyField: "PurchaseOrderId", foreignKeyValue: "PurchaseOrderName", dataSource: dataManagerPurchaseOrder, visible: false },
+                  { field: "ProductId", headerText: 'Product', foreignKeyField: "ProductId", foreignKeyValue: "ProductName", width: 350, dataSource: dataManagerProduct,  editType: ej.Grid.EditingType.Dropdown },
+                  { field: "Quantity", headerText: 'Qty', editType: ej.Grid.EditingType.Numeric, editParams: { decimalPlaces: 2 }, format: "{0:n2}" },
+                  { field: "UOM", headerText: 'UOM', allowEditing: false, },
+                  { field: "Price", headerText: 'Price', defaultValue: 0, allowEditing: false, editType: "numericedit", format: "R " + "{0:n2}" },
+                  { field: "SpecialPrice", headerText: 'Special Price',  defaultValue: 0, allowEditing: true, editType: "numericedit", format: "R " + "{0:n2}" },
+                  { field: "Total", headerText: 'Total', defaultValue: 0, allowEditing: false, editType: "numericedit", format: "R " + "{0:n2}" },
+                  { field: "Description", headerText: 'Desc', allowEditing: false, visible: false},
+                  { field: "QuickNote", headerText: 'Notes', allowEditing: true, },
+               ],
+               beforePrint: "beforePrint",
+               actionComplete: "complete",
+            });
+         });
+      });
+
+      function complete(args) {
+
+         var ModelData = '@Model.Recieved.ToString()'.toLowerCase().trim();
+
+         UpdateToolbarEdit(ModelData)
+
+         if (args.requestType == "beginedit" || args.requestType == "add") {
+            var dropdownObj = $("#" + this._id + "ProductId").ejDropDownList('instance');
+            dropdownObj.option({ enableFilterSearch: true, value: args.rowData.ProductId });
+         }
+
+         if (args.requestType == 'beginedit') {
+            $("#" + this._id + "_dialogEdit").ejDialog({ title: "Edit Record" });
+         }
+
+         if (args.requestType == 'save' || args.requestType == 'delete') {
+            RewriteTotal(args.data.PurchaseOrderId);
+         }
+         if (args.requestType == 'print') {
+         }
+      }
+
+      function UpdateToolbarEdit(ModelData) {
+
+         if (@Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_IsAdmin")) == 1) {
+
+            var editItem = $("#Grid_toolbarItems").data("ejToolbar").items.get(1);
+            editItem.hidden = false;
+            return;
+         }
+         else if (ModelData = true) {
+
+            var AddItems = $("#Grid_toolbarItems").data("ejToolbar").items.get(0).hidden = false;
+            var editItem = $("#Grid_toolbarItems").data("ejToolbar").items.get(1).hidden = false;
+            var DeltItem = $("#Grid_toolbarItems").data("ejToolbar").items.get(2).hidden = false;
+            AddItems.hidden = true;
+            editItem.hidden = true;
+            DeltItem.hidden = true;
+         }
+      }
+
+      function RewriteTotal(purchaseOrderId) {
+         $.ajax({
+            type: 'GET',
+            url: '/api/PurchaseOrder/GetById/' + purchaseOrderId,
+            success: function (data) {
+               $('#Amount').text(data.Amount);
+               $('#SubTotal').text(data.SubTotal);
+               $('#Total').text(data.Total);
+            }
+         });
+      }
+
+      function Post(gridObj) {
+
+         $.ajax({
+            type: 'POST',
+            url: '/api/GridExport/',
+            data: gridObj,
+            success: function (data) {
+               alert("00");
+            }
+         })
+      }
+
+    </script>
+
+}

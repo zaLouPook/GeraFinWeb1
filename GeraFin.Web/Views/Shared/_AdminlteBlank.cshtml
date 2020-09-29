@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>@ViewData["Title"]</title>
+   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+   <link rel="stylesheet" href="~/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+   @*<link rel="stylesheet" href="~/adminlte/components/font-awesome/css/font-awesome.min.css">*@
+   <link rel="stylesheet" href="~/adminlte/components/Ionicons/css/ionicons.min.css">
+   @*<link rel="stylesheet" href="~/adminlte/dist/css/AdminLTE.min.css">*@
+   <link rel="stylesheet" href="~/content/Fonts.GoogleAPI/Fonts.GoogleAPI.css" />
+   <link rel="stylesheet" href="~/LibExt/Plugins/fontawesome-free/css/all.min.css" />
+   <link rel="stylesheet" href="~/LibExt/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+   <link rel="stylesheet" href="~/LibExt/Plugins/dist/css/adminlte.min.css" />
+
+   @RenderSection("Styles", required: false)
+
+</head>
+@*<body class="hold-transition lockscreen" style="background-image: url('/images/bg1.jpg') ; background-size: cover; ">*@
+<body class="hold-transition lockscreen">
+
+      <div class="lockscreen-wrapper">
+         @RenderBody()
+      </div>
+
+      <script src="~/adminlte/components/jquery/dist/jquery.min.js"></script>
+      <script src="~/adminlte/components/jquery/dist/jquery.validate.min.js"></script>
+      <script src="~/adminlte/components/jquery/dist/additional-methods.min.js"></script>
+      <script src="~/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+      @RenderSection("Scripts", required: false)
+   </body>
+</html>

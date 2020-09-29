@@ -1,0 +1,446 @@
+﻿@model GeraFin.Models.ViewModels.Manage.Index
+
+@{
+   ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="~/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/morris.js/morris.css">
+<link rel="stylesheet" href="~/adminlte/bower_components/jvectormap/jquery-jvectormap.css">
+<link rel="stylesheet" href="~/adminlte/dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="~/adminlte/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="~/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+<!-- Content Wrapper. -->
+<div class="wrapper" style="height: auto; min-height: 100%;">
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content">
+         <div class="row">
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-aqua">
+                  <div class="inner">
+                     <h3>@Model.PurchaseOrderCount</h3>
+                     <p>Total Purchase Orders</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-bag"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-green">
+                  <div class="inner">
+                     <h3>@Model.TotalTasks<sup style="font-size: 20px">%</sup></h3>
+                     <p>Total Tasks</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-stats-bars"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-yellow">
+                  <div class="inner">
+                     <h3>@Model.DailyIssuesCount</h3>
+                     <p>Total Daily Issues</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-person-add"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-red">
+                  <div class="inner">
+                     <h3>@Model.DailyIncomeCount</h3>
+                     <p>Total Daily Income</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-pie-graph"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+         </div>
+         <!-- Main row -->
+         <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable ui-sortable">
+               <!-- TO DO List -->
+               <div class="box box-primary">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                     <i class="ion ion-clipboard"></i>
+
+                     <h3 class="box-title">To Do List</h3>
+
+                     <div class="box-tools pull-right">
+                        <ul class="pagination pagination-sm inline">
+                           <li><a href="#">«</a></li>
+                           <li><a href="#">1</a></li>
+                           <li><a href="#">2</a></li>
+                           <li><a href="#">3</a></li>
+                           <li><a href="#">»</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                     <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                     <ul class="todo-list ui-sortable">
+                        <li class="">
+                           <!-- drag handle -->
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <!-- checkbox -->
+                           <input type="checkbox" value="">
+                           <!-- todo text -->
+                           <span class="text">Design a nice theme</span>
+                           <!-- Emphasis label -->
+                           <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+                           <!-- General tools such as edit or delete-->
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                        <li>
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <input type="checkbox" value="">
+                           <span class="text">Make the theme responsive</span>
+                           <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                        <li>
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <input type="checkbox" value="">
+                           <span class="text">Let theme shine like a star</span>
+                           <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                        <li>
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <input type="checkbox" value="">
+                           <span class="text">Let theme shine like a star</span>
+                           <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                        <li>
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <input type="checkbox" value="">
+                           <span class="text">Check your messages and notifications</span>
+                           <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                        <li>
+                           <span class="handle ui-sortable-handle">
+                              <i class="fa fa-ellipsis-v"></i>
+                              <i class="fa fa-ellipsis-v"></i>
+                           </span>
+                           <input type="checkbox" value="">
+                           <span class="text">Let theme shine like a star</span>
+                           <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
+                           <div class="tools">
+                              <i class="fa fa-edit"></i>
+                              <i class="fa fa-trash-o"></i>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer clearfix no-border">
+                     <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                  </div>
+               </div>
+               <!-- /.box -->
+               <!-- quick email widget -->
+               <div class="box box-info">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                     <i class="fa fa-envelope"></i>
+
+                     <h3 class="box-title">Quick Email</h3>
+                     <!-- tools box -->
+                     <div class="pull-right box-tools">
+                        <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                           <i class="fa fa-times"></i>
+                        </button>
+                     </div>
+                     <!-- /. tools -->
+                  </div>
+                  <div class="box-body">
+                     <form action="#" method="post">
+                        <div class="form-group">
+                           <input type="email" class="form-control" name="emailto" placeholder="Email to:">
+                        </div>
+                        <div class="form-group">
+                           <input type="text" class="form-control" name="subject" placeholder="Subject">
+                        </div>
+                        <div>
+                           <ul class="wysihtml5-toolbar" style="">
+                              <li class="dropdown">
+                                 <a class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+
+                                    <span class="glyphicon glyphicon-font"></span>
+
+                                    <span class="current-font">Normal text</span>
+                                    <b class="caret"></b>
+                                 </a>
+                                 <ul class="dropdown-menu">
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" tabindex="-1" href="javascript:;" unselectable="on">Normal text</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" tabindex="-1" href="javascript:;" unselectable="on">Heading 1</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" tabindex="-1" href="javascript:;" unselectable="on">Heading 2</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" tabindex="-1" href="javascript:;" unselectable="on">Heading 3</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" tabindex="-1" href="javascript:;" unselectable="on">Heading 4</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" tabindex="-1" href="javascript:;" unselectable="on">Heading 5</a></li>
+                                    <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h6" tabindex="-1" href="javascript:;" unselectable="on">Heading 6</a></li>
+                                 </ul>
+                              </li>
+                              <li>
+                                 <div class="btn-group">
+                                    <a class="btn  btn-default" data-wysihtml5-command="bold" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Bold</a>
+                                    <a class="btn  btn-default" data-wysihtml5-command="italic" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Italic</a>
+                                    <a class="btn  btn-default" data-wysihtml5-command="underline" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Underline</a>
+
+                                    <a class="btn  btn-default" data-wysihtml5-command="small" title="CTRL+S" tabindex="-1" href="javascript:;" unselectable="on">Small</a>
+
+                                 </div>
+                              </li>
+                              <li>
+                                 <a class="btn  btn-default" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="blockquote" data-wysihtml5-display-format-name="false" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                    <span class="glyphicon glyphicon-quote"></span>
+
+                                 </a>
+                              </li>
+                              <li>
+                                 <div class="btn-group">
+                                    <a class="btn  btn-default" data-wysihtml5-command="insertUnorderedList" title="Unordered list" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                       <span class="glyphicon glyphicon-list"></span>
+
+                                    </a>
+                                    <a class="btn  btn-default" data-wysihtml5-command="insertOrderedList" title="Ordered list" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                       <span class="glyphicon glyphicon-th-list"></span>
+
+                                    </a>
+                                    <a class="btn  btn-default" data-wysihtml5-command="Outdent" title="Outdent" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                       <span class="glyphicon glyphicon-indent-right"></span>
+
+                                    </a>
+                                    <a class="btn  btn-default" data-wysihtml5-command="Indent" title="Indent" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                       <span class="glyphicon glyphicon-indent-left"></span>
+
+                                    </a>
+                                 </div>
+                              </li>
+                              <li>
+                                 <div class="bootstrap-wysihtml5-insert-link-modal modal fade" data-wysihtml5-dialog="createLink">
+                                    <div class="modal-dialog ">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <a class="close" data-dismiss="modal">×</a>
+                                             <h3>Insert link</h3>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="form-group">
+                                                <input value="http://" class="bootstrap-wysihtml5-insert-link-url form-control" data-wysihtml5-dialog-field="href">
+                                             </div>
+                                             <div class="checkbox">
+                                                <label>
+                                                   <input type="checkbox" class="bootstrap-wysihtml5-insert-link-target" checked="">Open link in new window
+                                                </label>
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <a class="btn btn-default" data-dismiss="modal" data-wysihtml5-dialog-action="cancel" href="#">Cancel</a>
+                                             <a href="#" class="btn btn-primary" data-dismiss="modal" data-wysihtml5-dialog-action="save">Insert link</a>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <a class="btn  btn-default" data-wysihtml5-command="createLink" title="Insert link" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                    <span class="glyphicon glyphicon-share"></span>
+
+                                 </a>
+                              </li>
+                              <li>
+                                 <div class="bootstrap-wysihtml5-insert-image-modal modal fade" data-wysihtml5-dialog="insertImage">
+                                    <div class="modal-dialog ">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <a class="close" data-dismiss="modal">×</a>
+                                             <h3>Insert image</h3>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="form-group">
+                                                <input value="http://" class="bootstrap-wysihtml5-insert-image-url form-control" data-wysihtml5-dialog-field="src">
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <a class="btn btn-default" data-dismiss="modal" data-wysihtml5-dialog-action="cancel" href="#">Cancel</a>
+                                             <a class="btn btn-primary" data-dismiss="modal" data-wysihtml5-dialog-action="save" href="#">Insert image</a>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <a class="btn  btn-default" data-wysihtml5-command="insertImage" title="Insert image" tabindex="-1" href="javascript:;" unselectable="on">
+
+                                    <span class="glyphicon glyphicon-picture"></span>
+
+                                 </a>
+                              </li>
+                           </ul><textarea class="textarea" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;" placeholder="Message"></textarea><input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="display: inline-block; background-color: rgb(255, 255, 255); border-collapse: separate; border-color: rgb(221, 221, 221); border-style: solid; border-width: 1px; clear: none; float: none; margin: 0px; outline: rgb(51, 51, 51) none 0px; outline-offset: 0px; padding: 10px; position: static; top: auto; left: auto; right: auto; bottom: auto; z-index: auto; vertical-align: baseline; text-align: start; box-sizing: border-box; box-shadow: none; border-radius: 0px; width: 100%; height: 125px;"></iframe>
+                        </div>
+                     </form>
+                  </div>
+                  <div class="box-footer clearfix">
+                     <button type="button" class="pull-right btn btn-default" id="sendEmail">
+                        Send
+                        <i class="fa fa-arrow-circle-right"></i>
+                     </button>
+                  </div>
+               </div>
+
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable ui-sortable">
+               <!-- /.box -->
+               <!-- Calendar -->
+               <div class="box box-solid bg-green-gradient">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                     <i class="fa fa-calendar"></i>
+
+                     <h3 class="box-title">Calendar</h3>
+                     <!-- tools box -->
+                     <div class="pull-right box-tools">
+                        <!-- button with a dropdown -->
+                        <div class="btn-group">
+                           <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-bars"></i>
+                           </button>
+                           <ul class="dropdown-menu pull-right" role="menu">
+                              <li><a href="#">Add new event</a></li>
+                              <li><a href="#">Clear events</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#">View calendar</a></li>
+                           </ul>
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-widget="remove">
+                           <i class="fa fa-times"></i>
+                        </button>
+                     </div>
+                     <!-- /. tools -->
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                     <!--The calendar -->
+                     <div id="calendar" style="width: 100%"><div class="datepicker datepicker-inline"><div class="datepicker-days" style=""><table class="table-condensed"><thead><tr><th colspan="7" class="datepicker-title" style="display: none;"></th></tr><tr><th class="prev">«</th><th colspan="5" class="datepicker-switch">June 2019</th><th class="next">»</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="old day" data-date="1558828800000">26</td><td class="old day" data-date="1558915200000">27</td><td class="old day" data-date="1559001600000">28</td><td class="old day" data-date="1559088000000">29</td><td class="old day" data-date="1559174400000">30</td><td class="old day" data-date="1559260800000">31</td><td class="day" data-date="1559347200000">1</td></tr><tr><td class="day" data-date="1559433600000">2</td><td class="day" data-date="1559520000000">3</td><td class="day" data-date="1559606400000">4</td><td class="day" data-date="1559692800000">5</td><td class="day" data-date="1559779200000">6</td><td class="day" data-date="1559865600000">7</td><td class="day" data-date="1559952000000">8</td></tr><tr><td class="day" data-date="1560038400000">9</td><td class="day" data-date="1560124800000">10</td><td class="day" data-date="1560211200000">11</td><td class="day" data-date="1560297600000">12</td><td class="day" data-date="1560384000000">13</td><td class="day" data-date="1560470400000">14</td><td class="day" data-date="1560556800000">15</td></tr><tr><td class="day" data-date="1560643200000">16</td><td class="day" data-date="1560729600000">17</td><td class="day" data-date="1560816000000">18</td><td class="day" data-date="1560902400000">19</td><td class="day" data-date="1560988800000">20</td><td class="day" data-date="1561075200000">21</td><td class="day" data-date="1561161600000">22</td></tr><tr><td class="day" data-date="1561248000000">23</td><td class="day" data-date="1561334400000">24</td><td class="day" data-date="1561420800000">25</td><td class="day" data-date="1561507200000">26</td><td class="day" data-date="1561593600000">27</td><td class="day" data-date="1561680000000">28</td><td class="day" data-date="1561766400000">29</td></tr><tr><td class="day" data-date="1561852800000">30</td><td class="new day" data-date="1561939200000">1</td><td class="new day" data-date="1562025600000">2</td><td class="new day" data-date="1562112000000">3</td><td class="new day" data-date="1562198400000">4</td><td class="new day" data-date="1562284800000">5</td><td class="new day" data-date="1562371200000">6</td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th colspan="7" class="datepicker-title" style="display: none;"></th></tr><tr><th class="prev">«</th><th colspan="5" class="datepicker-switch">2019</th><th class="next">»</th></tr></thead><tbody><tr><td colspan="7"><span class="month">Jan</span><span class="month">Feb</span><span class="month">Mar</span><span class="month">Apr</span><span class="month">May</span><span class="month focused">Jun</span><span class="month">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month">Dec</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th colspan="7" class="datepicker-title" style="display: none;"></th></tr><tr><th class="prev">«</th><th colspan="5" class="datepicker-switch">2010-2019</th><th class="next">»</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2009</span><span class="year">2010</span><span class="year">2011</span><span class="year">2012</span><span class="year">2013</span><span class="year">2014</span><span class="year">2015</span><span class="year">2016</span><span class="year">2017</span><span class="year">2018</span><span class="year focused">2019</span><span class="year new">2020</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-decades" style="display: none;"><table class="table-condensed"><thead><tr><th colspan="7" class="datepicker-title" style="display: none;"></th></tr><tr><th class="prev">«</th><th colspan="5" class="datepicker-switch">2000-2090</th><th class="next">»</th></tr></thead><tbody><tr><td colspan="7"><span class="decade old">1990</span><span class="decade">2000</span><span class="decade focused">2010</span><span class="decade">2020</span><span class="decade">2030</span><span class="decade">2040</span><span class="decade">2050</span><span class="decade">2060</span><span class="decade">2070</span><span class="decade">2080</span><span class="decade">2090</span><span class="decade new">2100</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-centuries" style="display: none;"><table class="table-condensed"><thead><tr><th colspan="7" class="datepicker-title" style="display: none;"></th></tr><tr><th class="prev">«</th><th colspan="5" class="datepicker-switch">2000-2900</th><th class="next">»</th></tr></thead><tbody><tr><td colspan="7"><span class="century old">1900</span><span class="century focused">2000</span><span class="century">2100</span><span class="century">2200</span><span class="century">2300</span><span class="century">2400</span><span class="century">2500</span><span class="century">2600</span><span class="century">2700</span><span class="century">2800</span><span class="century">2900</span><span class="century new">3000</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div></div>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer text-black">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <!-- Progress bars -->
+                           <div class="clearfix">
+                              <span class="pull-left">Task #1</span>
+                              <small class="pull-right">90%</small>
+                           </div>
+                           <div class="progress xs">
+                              <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                           </div>
+
+                           <div class="clearfix">
+                              <span class="pull-left">Task #2</span>
+                              <small class="pull-right">70%</small>
+                           </div>
+                           <div class="progress xs">
+                              <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                           </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-6">
+                           <div class="clearfix">
+                              <span class="pull-left">Task #3</span>
+                              <small class="pull-right">60%</small>
+                           </div>
+                           <div class="progress xs">
+                              <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                           </div>
+
+                           <div class="clearfix">
+                              <span class="pull-left">Task #4</span>
+                              <small class="pull-right">40%</small>
+                           </div>
+                           <div class="progress xs">
+                              <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                           </div>
+                        </div>
+                        <!-- /.col -->
+                     </div>
+                     <!-- /.row -->
+                  </div>
+               </div>
+               <!-- /.box -->
+            </section>
+            <!-- right col -->
+         </div>
+      </section>
+   </div>
+</div>
+@section Scripts {
+   @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+@section Styles{
+
+}

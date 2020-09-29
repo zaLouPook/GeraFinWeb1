@@ -1,0 +1,122 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+@model UpdateFilesUploaded
+@{
+   List<UpdateFilesUploaded> files = context.UpdateFilesUploaded.ToList();
+   ViewData["Title"] = "Update Product List";
+}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <section class="content-header" id="content-Page-header">
+      <h1>
+         @ViewData["Title"]
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="/Excel/Index">@ViewData["Title"]</a></li>
+      </ol>
+
+      @using (Html.BeginForm("UploadPriceList", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+      {
+         <input type="file" name="ProductUpdates" id="ProductUpdates" style="display: initial" />
+         <button id="submitButton" type="submit" style="display: initial">Submit</button>
+      }
+   </section>
+   <!-- Main content -->
+   <section class="content">
+      <!-- Default box -->
+      <div class="box">
+         <div class="box-header with-border">
+            <div class="box-tools pull-right">
+               <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                       title="Collapse">
+                  <i class="fa fa-minus"></i>
+               </button>
+               <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                  <i class="fa fa-times"></i>
+               </button>
+            </div>
+         </div>
+         <div class="box-body">
+            <div id="Grid" style="border: 2px solid;">
+               <div class="table-responsive">
+                  <table class="table no-margin">
+                     <thead>
+                        <tr>
+                           <th>File Name</th>
+                           <th>File Upload Date</th>
+                           <th>File Record Count</th>
+                           <th>File Records Processed</th>
+                           <th>Is Approved</th>
+                           <th>Uploaded By</th>
+                           <th>Approved By</th>
+                        </tr>
+                     </thead>
+                     <tbody style="border: 1px solid;">
+                        @foreach (var item in files)
+                        {
+                           <tr>
+                              <!-- checkbox -->
+                              <td style="text-align:left;">
+                                 @item.FileName
+                              </td>
+                              <!-- todo text -->
+                              <td>
+                                 @item.FileUploadDate.ToString()
+                              </td>
+                              <!-- todo over due text -->
+                              <td>
+                                 @item.FileRecordCount
+                              </td>
+
+                              <!-- Emphasis label -->
+                              <td>
+                                 @item.FileRecordsProcessed
+                              </td>
+
+                              <td>
+                                 @item.IsApproved
+                              </td>
+
+                              <td>
+                                 @item.UploadedBy
+                              </td>
+
+                              <td>
+                                 @item.ApprovedBy
+                              </td>
+                           </tr>
+                        }
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+
+            </div>
+            <!-- /.box-footer-->
+         </div>
+         <!-- /.box -->
+   </section>
+   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Styles{
+
+}
+
+@section Scripts
+{
+
+
+
+   var Permission = @Convert.ToBoolean(HttpContextAccessor.HttpContext.Session.GetInt32("_IsAdmin")).ToString().ToLower();
+   var branchId = @Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"));
+
+
+
+}
+

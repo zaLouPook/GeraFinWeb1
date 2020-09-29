@@ -1,0 +1,38 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://www.gerafinweb.co.za/",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:8182/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:8182/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "ancmHostingModel": "OutOfProcess"
+    },
+    "GeraFin": {
+      "commandName": "IIS",
+      "applicationUrl": "http://localhost:55013/"
+    },
+    "IIS_PROD": {
+      "commandName": "IIS",
+      "workingDirectory": "C:\\inetpub\\Matimba\\GeraFin.Web.exe",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:8182/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}

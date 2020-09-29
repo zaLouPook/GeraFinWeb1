@@ -1,0 +1,62 @@
+﻿@using System.Linq;
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+
+@model GeraFin.Models.ViewModels.GeraFinWeb.ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+<div class="content-wrapper">
+    @{ 
+        int BranchId = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"));
+        int Permission =Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_IsAdmin"));
+    }
+    <section class="content">
+
+        <div class="error-page">
+
+            @if (Model.ShowRequestId)
+            {
+                @*<h2 class="headline text-yellow">@Model.RequestId</h2>*@
+            }
+
+            <div class="error-content">
+                <h3>
+                    <i class="fa fa-warning text-red"></i> @*@Model.ErrorMessage*@
+                </h3>
+                @if (BranchId == 0 && Permission == 1)
+                {
+                    <p style="color: black;">
+                        <div id="Message" style="color: black;">
+                            Oops You are an admin user and have not selected a branch.! please return to <a href="~/MyBranches/Index">return to My Branches to do so now</a> or try using the search form.
+                        </div>
+                    </p>
+                }
+                else
+                {
+                    <p style="color: black;">
+                        <div id="Message" style="color: black;">
+                            Oops A general error has occured.! Meanwhile, you may <a href="/~GeraFinUser/Index">return to dashboard</a> or try using the search form.
+                        </div>
+                    </p>
+                }
+                
+                <form class="search-form">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" name="submit" class="btn btn-warning btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.input-group -->
+                </form>
+            </div>
+            <!-- /.error-content -->
+        </div>
+        <!-- /.error-page -->
+    </section>
+</div>

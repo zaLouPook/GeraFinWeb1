@@ -1,0 +1,119 @@
+﻿html.control-sidebar-animate {
+    overflow-x: hidden;
+}
+
+/*.control-sidebar {
+    bottom: absolute;
+    position: absolute;
+    top:;
+    z-index:;
+}*/
+
+    /*.control-sidebar, .control-sidebar::before {
+        bottom:;
+        display: none;
+        right: -;
+        width:;
+    }*/
+
+        .control-sidebar::before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            z-index: -1;
+        }
+
+/*body.text-sm .control-sidebar {
+    bottom:;
+    top:;
+}*/
+
+/*.main-header.text-sm ~ .control-sidebar {
+    top:;
+}*/
+
+/*.main-footer.text-sm ~ .control-sidebar {
+    bottom:;
+}*/
+
+.control-sidebar-open .control-sidebar {
+    display: block;
+}
+
+    .control-sidebar-open .control-sidebar, .control-sidebar-open .control-sidebar::before {
+        right: 0;
+    }
+
+.control-sidebar-open.control-sidebar-push .content-wrapper, .control-sidebar-open.control-sidebar-push-slide .content-wrapper, .control-sidebar-open.control-sidebar-push .main-footer, .control-sidebar-open.control-sidebar-push-slide .main-footer {
+    margin-right:;
+}
+
+.control-sidebar-slide-open .control-sidebar {
+    display: block;
+}
+
+    .control-sidebar-slide-open .control-sidebar.control-sidebar-push .content-wrapper, .control-sidebar-slide-open .control-sidebar.control-sidebar-push-slide .content-wrapper, .control-sidebar-slide-open .control-sidebar.control-sidebar-push .main-footer, .control-sidebar-slide-open .control-sidebar.control-sidebar-push-slide .main-footer {
+        margin-right:0px;
+    }
+
+.control-sidebar-slide-open .control-sidebar-dark, .control-sidebar-slide-open .control-sidebar-dark a, .control-sidebar-slide-open .control-sidebar-dark .nav-link {
+    color:black;
+}
+
+.control-sidebar-slide-open .control-sidebar-dark {
+    background:;
+}
+
+    .control-sidebar-slide-open .control-sidebar-dark a:hover {
+        color:black;
+    }
+
+    .control-sidebar-slide-open .control-sidebar-dark h1, .control-sidebar-slide-open .control-sidebar-dark h2, .control-sidebar-slide-open .control-sidebar-dark h3, .control-sidebar-slide-open .control-sidebar-dark h4, .control-sidebar-slide-open .control-sidebar-dark h5, .control-sidebar-slide-open .control-sidebar-dark h6, .control-sidebar-slide-open .control-sidebar-dark label {
+        color:white;
+    }
+
+    .control-sidebar-slide-open .control-sidebar-dark .nav-tabs {
+        background-color:grey;
+        border-bottom: 0;
+        margin-bottom: 5px;
+    }
+
+        .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-item {
+            margin: 0;
+        }
+
+        .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link {
+            border-radius: 0;
+            padding: 10px 20px;
+            position: relative;
+            text-align: center;
+        }
+
+            .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:hover, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:active, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:focus, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link.active {
+                border: 0;
+            }
+
+                .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:hover, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:active, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link:focus, .control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link.active {
+                    border-bottom-color: transparent;
+                    border-left-color: transparent;
+                    border-top-color: transparent;
+                    color: white;
+                }
+
+                /*.control-sidebar-slide-open .control-sidebar-dark .nav-tabs .nav-link.active {
+                    background-color:;
+                }*/
+
+    .control-sidebar-slide-open .control-sidebar-dark .tab-pane {
+        padding: 10px 15px;
+    }
+
+.control-sidebar-slide-open .control-sidebar-light {
+    color: red;
+}
+
+/*.control-sidebar-slide-open .control-sidebar-light {
+    background:;
+    border-left:;
+}*/

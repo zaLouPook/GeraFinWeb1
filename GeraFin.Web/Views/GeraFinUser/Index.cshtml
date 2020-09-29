@@ -1,0 +1,629 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using GeraFin.Models.ViewModels.Dashboard;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model QuickEmail
+
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+
+@{
+   int BranchId = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"));
+   int Day = DateTime.Now.Day;
+   UserProfile Profile = context.UserProfile.SingleOrDefault(x => x.Email.Equals(User.Identity.Name));
+   List<UserTasks> userTasks = context.UserTasks.Where(x => x.UserId.Equals(Profile.UserProfileId) && x.MarkCompleted == false).ToList();
+   List<Specials> Specials = context.Specials.Where(x => x.BranchId.Equals(BranchId) && x.Expired.Equals(false)).ToList();
+   List<PurchaseOrder> purchaseOrders = context.PurchaseOrder.Where(x => x.BranchId.Equals(BranchId) && x.Recieved == false).Take(5).OrderByDescending(x => x.PurchaseOrderId).ToList();
+   List<DailyIssues> dailyIssues = context.DailyIssues.Where(x => x.BranchId.Equals(BranchId) && x.IssueComplete == false).Take(5).OrderByDescending(x => x.DailyIssuesId).ToList();
+   List<DailyIncome> dailyIncome = context.DailyIncome.Where(x => x.BranchId.Equals(BranchId)).Take(5).OrderByDescending(x => x.SalesOrderId).ToList();
+   List<BranchGP> branchGP = context.BranchGP.Where(x => x.BranchId.Equals(BranchId) && x.Day <= Day).Take(5).OrderByDescending(x => x.GPId).ToList();
+}
+
+@{
+   ViewData["Title"] = "Index";
+}
+@*<script src="lib/signalr/signalr.min.js"></script>*@
+<!-- Content Wrapper. -->
+<div class="wrapper" style="height: auto; min-height: 100%;">
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content">
+         <div class="row">
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-aqua">
+                  <div class="inner">
+                     <h3>@purchaseOrders.Count()</h3>
+                     <p>Total Purchase Orders</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-bag"></i>
+                  </div>
+                  <a href="/PurchaseOrder/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-green">
+                  <div class="inner">
+                     <h3>@userTasks.Count()<sup style="font-size:20px"></sup></h3>
+                     <p>Total Tasks</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-stats-bars"></i>
+                  </div>
+                  <a href="/EventsCalendar/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-yellow">
+                  <div class="inner">
+                     <h3>@dailyIssues.Count()</h3>
+                     <p>Total Daily Issues</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-person-add"></i>
+                  </div>
+                  <a href="/DailyIssues/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+               <!-- small box -->
+               <div class="small-box bg-red">
+                  <div class="inner">
+                     <h3>@dailyIncome.Count()</h3>
+                     <p>Total Daily Income</p>
+                  </div>
+                  <div class="icon">
+                     <i class="ion ion-pie-graph"></i>
+                  </div>
+                  <a href="/DailyIncome/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               </div>
+            </div>
+            <!-- ./col -->
+         </div>
+         <!-- Main row -->
+         <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable ui-sortable">
+               <!-- TO DO List -->
+               <div class="box box-primary">
+                  <div class="box-header ui-sortable-handle" id="SendMessage" style="cursor: move;">
+                     <i class="ion ion-clipboard"></i>
+                     <h3 class="box-title">To Do List</h3>
+                     <div class="box-tools pull-right">
+                        <ul class="pagination pagination-sm inline">
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body" style="border-top: 1px solid rgb(60, 141, 188); cursor: move;">
+                     <div class="box-body">
+                        <ul class="todo-list ui-sortable" style="border-bottom: 1px solid rgb(60, 141, 188); cursor: move;">
+                           <div class="table-responsive">
+                              <table class="table no-margin">
+                                 <thead>
+                                    <tr>
+                                       <th style="text-align:center">Mark Complete</th>
+                                       <th>Task Name</th>
+                                       <th>Over Due</th>
+                                       <th>Due Date</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @foreach (var ToDo in userTasks)
+                                    {
+                                       <tr>
+                                          <!-- checkbox -->
+                                          <td style="text-align:center;">
+                                             <form id="MarkCompleted" asp-action="CompleteToDo" asp-controller="GeraFinUser" method="post">
+                                                <input type="checkbox" style="text-align:center" Name="TaskId" id="TaskId" value="@ToDo.TaskId" onclick='handleClick(this);'>
+                                             </form>
+                                          </td>
+                                          <!-- todo text -->
+                                          <td>
+                                             <span class="text">@ToDo.TaskName</span>
+                                          </td>
+                                          <!-- todo over due text -->
+                                          <td>
+                                             @if (@ToDo.DueDate > DateTime.Now)
+                                             {
+                                                <small class="label-success" id="ToDoTaskNameDueDate"><i class="fa fa-clock-o"></i>@ToDo.IsOverDue</small>
+                                             }
+                                             else
+                                             {
+                                                <small class="label-danger" id="ToDoTaskNameDueDate"><i class="fa fa-clock-o"></i>@ToDo.IsOverDue</small>
+                                             }
+                                          </td>
+
+                                          <!-- Emphasis label -->
+                                          <td>
+                                             @if (@ToDo.DueDate > DateTime.Now)
+                                             {
+                                                <small class="label-success" id="ToDoTaskNameDueDate"><i class="fa fa-clock-o"></i>@ToDo.DueDate</small>
+                                             }
+                                             else
+                                             {
+                                                <small class="label-danger" id="ToDoTaskNameDueDate"><i class="fa fa-clock-o"></i>@ToDo.DueDate</small>
+                                             }
+                                          </td>
+                                       </tr>
+                                    }
+                                 </tbody>
+                              </table>
+                           </div>
+                        </ul>
+                     </div>
+                  </div>
+                  <!--Begin Post New ToDo Item-->
+                  <div class="box-footer clearfix no-border">
+                     <form asp-action="NewToDo" asp-controller="GeraFinUser" method="post">
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="From" value="@User.Identity.Name" placeholder="From">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="UserId" value="@Profile.UserProfileId" placeholder="UserId">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="BranchId" value="@Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"))" placeholder="BranchId">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="text" style="width:85%; height: 30px;" id="TaskName" name="TaskName" placeholder="Task Name" required="" aria-required="true">
+                           <input type="submit" style="float: right; background-color: #3c8dbc; color:white;" id="submitId" value="Create ToDo">
+                        </div>
+                     </form>
+                  </div>
+               </div>
+
+               <!-- quick email widget -->
+               <div class="box box-info">
+                  <div class="box-header" style="border-bottom: 1px solid rgb(60, 141, 188);">
+                     <i class="fa fa-envelope"></i>
+                     <h3 class="box-title">Quick Email</h3>
+                     <!-- tools box -->
+                     <div class="pull-right box-tools">
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
+                           <i class="fa fa-times"></i>
+                        </button>
+                     </div>
+                  </div>
+
+                  <!--Alert Message Fail-->
+                  <div class="alert alert-danger alert-dismissible" id="AlertFail" style=" text-align: center; display: none;">
+                     <button type="button" class="close" style="float: right; font-size:42px; display: flex; justify-content: center;" data-dismiss="alert" aria-hidden="false">×</button>
+                     <h4><i class="icon fa fa-thumbs-down"></i> Message Not Sent !</h4>
+                     @Profile.FirstName There has been an error durring the transport of your email.
+                  </div>
+
+                  <!--Alert Message Send-->
+                  <div class="alert alert-success alert-dismissible" id="AlertSucsess" style=" text-align: center; display: none;">
+                     <button type="button" class="close" style="float: right; font-size:42px; display: flex; justify-content: center;" data-dismiss="alert" aria-hidden="false">×</button>
+                     <h4 id="H4Centre"><i class="icon fa fa-thumbs-up"></i> Message Sent Sucsessfully !</h4>
+                     @Profile.FirstName Your Email Has Been Sent Sucsessfully !
+                  </div>
+
+                  <!--Begin Post New Quick Email-->
+                  <div class="box-body">
+                     <form asp-action="QuickEmail" asp-controller="GeraFinUser" method="post">
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="From" value="@User.Identity.Name" placeholder="From">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="UserId" value="@Profile.UserProfileId" placeholder="UserId">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="BranchId" value="@Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"))" placeholder="BranchId">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="hidden" class="form-control" name="DateSent" value="" placeholder="DateSent">
+                        </div>
+
+                        <div class="form-group">
+                           <input type="text" class="form-control" name="EmailTo" placeholder="EmailTo" required>
+                        </div>
+
+                        <div class="form-group">
+                           <input type="text" class="form-control" name="Subject" placeholder="Subject" required>
+                        </div>
+
+                        <div class="form-group">
+                           <textarea class="textarea" name="Body" placeholder="Body" style="width:100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+
+                        <div class="box-footer clearfix">
+                           <input type="submit" style="background-color: #3c8dbc; color:white" class="pull-right btn btn-default" id="sendEmail" value="Send" />
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable ui-sortable">
+
+               <!--Begin Latest Specials -->
+               <div class="box box-primary">
+                  <div class="box-header with-border" style="border-bottom:1px solid #3c8dbc;">
+                     <h3 class="box-title" style="text-align:center;">Running Specials</h3>
+
+                     <div class="box-tools pull-right">
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                     </div>
+                  </div>
+
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                     <ol class="products-list product-list-in-box">
+                        @if (Specials.Count().Equals(0))
+                        {
+                           <li class="item">
+                              <div class="product-info" style="margin-left:10px;">
+                                 <span class="product-title" id="titlleLeft_htmlSpan">Product Name</span>
+                                 <span class="product-title" id="titlleRight_htmlSpan">Special Price</span>
+                              </div>
+                           </li>
+                        }
+                        else
+                        {
+                           @foreach (var item in Specials.Take(5))
+                           {
+                              <li class="item">
+                                 <div class="product-info" style="margin-left:10px;">
+                                    <a href="javascript:void(0)" class="product-title">
+                                       @item.ProductName
+                                       <span class="label label-warning pull-right">R @item.SpecialPrice</span>
+                                    </a>
+                                 </div>
+                              </li>
+                           }
+                        }
+                     </ol>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer text-center">
+                     @if (Specials.Count > 10)
+                     {
+                        <a href="javascript:void(0)" style="background-color: #3c8dbc; color:white" class="uppercase">View All Specials</a>
+                     }
+                  </div>
+               </div>
+               <!--End Latest Specials -->
+               <!--Beging Last 5 Purchase Orders-->
+               <div class="box box-info">
+                  <div class="box-header with-border" style="border-bottom: 1px solid rgb(60, 141, 188); cursor: move;">
+                     <h3 class="box-title">Last 5 Purchase Orders</h3>
+                     <div class="box-tools pull-right">
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                     </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                     <div class="table-responsive">
+                        <table class="table no-margin">
+                           <thead>
+                              <tr>
+                                 <th>Purchase Order ID</th>
+                                 <th>Supplier Name</th>
+                                 <th>Status</th>
+                                 <th>Sub Total</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @if (purchaseOrders.Count != 0)
+                              {
+                                 @foreach (var item in purchaseOrders.Take(5))
+                                 {
+                                    string Recieved = "";
+                                    string SupplierName = (from venders in context.Vendor.Where(x => x.VendorId == item.VendorId) select venders.VendorName.ToString()).FirstOrDefault();
+                                    if (item.Recieved == false)
+                                    {
+                                       Recieved = "Pending";
+                                    }
+                                    else
+                                    {
+                                       Recieved = "Delivered";
+                                    }
+                                    <tr>
+                                       <td>
+                                          <a href="/PurchaseOrder/Detail/?id=@item.PurchaseOrderId">@item.PurchaseOrderName</a>
+                                       </td>
+                                       <td>
+                                          @SupplierName
+                                       </td>
+                                       <td>
+                                          <span class="label label-success">@Recieved</span>
+                                       </td>
+                                       <td>
+                                          R @item.SubTotal
+                                       </td>
+                                    </tr>
+                                 }
+                              }
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer clearfix">
+                     <a href="/PurchaseOrder/Index" style="background-color: #3c8dbc; color:white" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                     <a href="/PurchaseOrder/Index" style="background-color: #3c8dbc; color:white" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                  </div>
+               </div>
+               <!--End Last 5 Purchase Orders-->
+               <!--Begin Last 5 Daily Issues-->
+               <div class="box box-info">
+                  <div class="box-header with-border" style="border-bottom: 1px solid rgb(60, 141, 188); cursor: move;">
+                     <h3 class="box-title">Last 5 Daily Issues</h3>
+                     <div class="box-tools pull-right">
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                     </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                     <div class="table-responsive">
+                        <table class="table no-margin">
+                           <thead>
+                              <tr>
+                                 <th>Daily Issue ID</th>
+                                 <th>Sheet Name</th>
+                                 <th>Status</th>
+                                 <th>Issue Total</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @if (dailyIssues.Count != 0)
+                              {
+                                 @foreach (var item in dailyIssues.Take(5))
+                                 {
+                                    string Complete = "";
+                                    if (item.IssueComplete == false)
+                                    {
+                                       Complete = "Pending";
+                                    }
+                                    else
+                                    {
+                                       Complete = "Issue Completed";
+                                    }
+                                    <tr>
+                                       <td>
+                                          <a href="/DailyIssues/Detail/?id=@item.DailyIssuesId">@item.DailyIssuesName</a>
+                                       </td>
+                                       <td>
+                                          @item.DailyIssueSheetName
+                                       </td>
+                                       <td>
+                                          <span class="label label-success">@Complete</span>
+                                       </td>
+                                       <td>
+                                          R @item.SubTotal
+                                       </td>
+                                    </tr>
+                                 }
+                              }
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+
+                  <div class="box-footer clearfix">
+                     <a href="/DailyIssues/Index" style="background-color: #3c8dbc; color:white" class="btn btn-sm btn-info btn-flat pull-left">Create New Issue</a>
+                     <a href="/DailyIssues/Index" style="background-color: #3c8dbc; color:white" class="btn btn-sm btn-default btn-flat pull-right">View All Issues</a>
+                  </div>
+               </div>
+               <!--Begin Last 5 BranchGP-->
+               <div class="box box-info">
+                  <div class="box-header with-border ui-sortable-handle" style="border-bottom: 1px solid rgb(60, 141, 188); cursor: move;">
+                     <h3 class="box-title">GP Last 5 Days</h3>
+                     <div class="box-tools pull-right">
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" style="background-color: #3c8dbc; color:white" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                     </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                     <div class="table-responsive">
+                        <table class="table no-margin">
+                           <thead>
+                              <tr>
+                                 <th>Day</th>
+                                 <th>Income</th>
+                                 <th>Costs</th>
+                                 <th>PrelimGP</th>
+                                 <th>PrelimGP%</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach (var item in branchGP.Take(5).OrderByDescending(x => x.GPId))
+                              {
+                                 <tr>
+                                    <td>
+                                       <a href="/DailyIssues/Detail/?id=">@item.Day</a>
+                                    </td>
+                                    <td>
+                                       R @item.Income
+                                    </td>
+                                    <td>
+                                       R @item.Costs
+                                    </td>
+                                    <td>
+                                       <span class="label label-success">@item.PreliminaryGP</span>
+                                    </td>
+                                    <td>
+                                       <span class="label label-success">@item.PreliminaryGPPerc</span>
+                                    </td>
+                                 </tr>
+                              }
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="box-footer clearfix">
+                     <a href="/BranchGP/Index" style="background-color: #3c8dbc; color:white" class="btn btn-sm btn-default btn-flat pull-right">View All</a>
+                  </div>
+               </div>
+
+            </section>
+            <!-- right col -->
+         </div>
+         <div class="box box-success" style="border-top-color: #00a65a; border-bottom-color: #00a65a; border-left-color: #00a65a; border-right-color: #00a65a;">
+            <div class="box-header ui-sortable-handle" style="cursor: move;">
+               <i class="fa fa-comments-o"></i>
+
+               <h3 class="box-title">Chat</h3>
+
+               <div class="box-tools pull-right" data-toggle="tooltip" title="" data-original-title="Status">
+                  <div class="btn-group" data-toggle="btn-toggle">
+                     <button type="button" class="btn btn-default btn-sm active">
+                        <i class="fa fa-square text-green"></i>
+                     </button>
+                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                  </div>
+               </div>
+            </div>
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 125px;">
+               <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 125px;">
+                  <!-- chat item -->
+                  <div class="item">
+                     <img src="~/upload/1b14d713-ecaf-4cfb-9ae4-2a40cd439fb8.jpg" alt="user image" class="online">
+
+                     <p class="message">
+                        <a href="#" class="name">
+                           <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                           @Profile.FirstName  @Profile.LastName
+                        </a>
+                     </p>
+                  </div>
+               </div>
+               <!-- /.item -->
+               <!-- chat item -->
+               <div class="item">
+                  <!-- /.item -->
+                  <!-- chat item -->
+                  <!-- /.item -->
+               </div>
+               <div class="slimScrollBar"
+                    style="background: rgb(0, 0, 0);
+                              width: 7px;
+                              position: absolute;
+                              top: 0px;
+                              opacity: 0.4;
+                              display: none;
+                              border-radius: 7px;
+                              z-index: 99;
+                              right: 1px;
+                              height: 250px;">
+               </div>
+               <div class="slimScrollRail"
+                    style="width: 7px;
+                           height: 100%;
+                           position: absolute;
+                           top: 0px;
+                           display: none;
+                           border-radius: 7px;
+                           background: rgb(51, 51, 51);
+                           opacity: 0.2;
+                           z-index: 90;
+                           right: 1px;">
+               </div>
+            </div>
+            <!-- /.chat -->
+            <div class="box-footer">
+               <div class="input-group" id="frm-send-message" action="#">
+                  <input class="form-control" id="Message" placeholder="Type message...">
+                  <div class="input-group-btn">
+                     <button type="submit" id="send" value="Send" class="btn btn-success">
+                        <i class="fa fa-plus" id="send" value="Send"></i>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </div>
+   <div style="display:none">
+      <form asp-action="UpdatePopUpData" asp-controller="GeraFinUser" method="post" id="SubmitHidden">
+         <div class="form-group">
+            <input type="hidden" class="form-control" name="BranchId" value="@Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"))" placeholder="BranchId">
+         </div>
+      </form>
+   </div>
+</div>
+@section Scripts {
+   @await Html.PartialAsync("_ValidationScriptsPartial")
+
+   <!--Signal IR-->
+   @*<script src="~ /lib/signalr/signalr.min.js"></script>*@
+
+   <script type="text/javascript">
+
+   window.addEventListener("load", function () {
+
+      var MailStatus = "@GeraFin.Controllers.Api.GeraFinUserController.ShowBlock";
+
+      if (MailStatus == "Sucsess") {
+         var ShowSucsess = document.getElementById("AlertSucsess");
+
+         ShowSucsess.style.display = "Block";
+      }
+      else if (MailStatus == "Failure") {
+
+         var ShowFailure = document.getElementById("AlertFail");
+
+         ShowFailure.style.display = "Block";
+      }
+   }, false);
+
+   var BranchId = '@Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("_BranchId"))'
+
+   function handleClick(cb) {
+
+      var tsk = document.getElementById("TaskId").checked
+
+      if (tsk = true) {
+
+         this.MarkCompleted = document.getElementById('MarkCompleted');
+         this.MarkCompleted.submit();
+      }
+   }
+
+   var ShowPopUp = "@GeraFin.Controllers.Api.GeraFinUserController.LoadModel"
+
+   if (ShowPopUp == "true") {
+
+      $("#modal-warning").modal();
+   }
+
+   </script>
+}
+
+@section Styles{
+   <style>
+      .datepicker datepicker-inline {
+         width: 100% !important;
+      }
+   </style>
+}

@@ -1,0 +1,318 @@
+﻿@model IEnumerable<POPEmail>
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+@{
+   ViewData["Title"] = "Inbox";
+   int iUserId = context.UserProfile.Where(x => x.Email == User.Identity.Name).Select(x => x.UserProfileId).FirstOrDefault();
+   int iEmailUserId = context.UserConfig.Where(x => x.UserId == iUserId).Select(x=> x.UserId).FirstOrDefault();
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <section class="content-header" id="content-Page-header">
+      <h1>
+         @ViewData["Title"]
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="/MailBox/Compose">@ViewData["Title"]</a></li>
+      </ol>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+
+      @if (iEmailUserId == 0)
+      {
+      <div class="box box-info" style=" margin-top: 100px; margin-left: 460px; width:50%;">
+         <div class="box-header with-border" style="border-bottom: 1px solid #3c8dbc;">
+            <h3 class="box-title">Section Not Configured For @User.Identity.Name</h3>
+         </div>
+         <div style="padding-top: 10px" ;>
+            <ol>
+               <li><i>Please ensure that you have enabled  pop / imap on your google account</i></li>
+               <li><i>Please ensure that allow access for less secure apps is set to true</i></li>
+            </ol>
+         </div>
+         <!-- /.box-header -->
+         <!-- form start -->
+            <form class="form-horizontal" asp-action="Add" asp-controller="MailBox" method="post">
+
+               <div class="box-body">
+                  <div class="form-group">
+                     <label for="Email" class="col-sm-2 control-label">Email</label>
+
+                     <div class="col-sm-10">
+                        <input type="Email" class="form-control" name="Email" value="" id="Email" placeholder="Email" >
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="Password" class="col-sm-2 control-label">Password</label>
+
+                     <div class="col-sm-10">
+                        <input type="Password" class="form-control" name="Password" value="" id="Password" placeholder="Password" >
+                     </div>
+                  </div>
+
+                  <div class="col-sm-10">
+                     <input type="hidden" class="form-control" name="iUserId" value="@iUserId" id="iUserId" placeholder="iUserId" >
+                  </div>
+
+               </div>
+               <!-- /.box-body -->
+               <div class="box-footer">
+                  <button type="submit" class="btn btn-default">Cancel</button>
+                  <button type="submit" class="btn btn-info pull-right">Save</button>
+               </div>
+               <!-- /.box-footer -->
+            </form>
+      </div>
+      }
+      else
+      {
+         <div class="row">
+            <div class="col-md-3">
+               <a href="/MailBox/Compose" class="btn btn-primary btn-block margin-bottom">Compose</a>
+               <div class="box box-solid">
+                  <div class="box-header with-border">
+
+                     <h3 class="box-title">Folders</h3>
+
+                     <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                     </div>
+                  </div>
+                  <div class="box-body no-padding">
+                     <ul class="nav nav-pills nav-stacked">
+
+                        <li>
+                           <a href="/api/MailBox">
+                              <i class="fa fa-inbox"></i> Inbox
+                              <span class="label label-primary pull-right"></span>
+                           </a>
+                        </li>
+
+                        <li>
+                           <a href="#">
+                              <i class="fa fa-envelope-o"></i> Sent
+                           </a>
+                        </li>
+
+                        <li>
+                           <a href="#">
+                              <i class="fa fa-file-text-o"></i> Drafts
+                           </a>
+                        </li>
+
+                        <li>
+                           <a href="#">
+                              <i class="fa fa-filter">
+                              </i> Junk <span class="label label-warning pull-right"></span>
+                           </a>
+                        </li>
+
+                        <li>
+                           <a href="#">
+                              <i class="fa fa-trash-o"></i> Trash
+                           </a>
+                        </li>
+
+                     </ul>
+                  </div>
+                  <!-- /.box-body -->
+               </div>
+               <!-- /. box -->
+               <div class="box box-solid">
+                  <div class="box-header with-border">
+
+                     <h3 class="box-title">Labels</h3>
+
+                     <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                           <i class="fa fa-minus"></i>
+                        </button>
+                     </div>
+                  </div>
+
+                  <div class="box-body no-padding">
+                     <ul class="nav nav-pills nav-stacked">
+                        <li>
+                           <a href="#"><i class="fa fa-circle-o text-red"></i> Important</a>
+                        </li>
+                        <li>
+                           <a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a>
+                        </li>
+                        <li>
+                           <a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- /.box-body -->
+               </div>
+               <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9" style="width: 51%; float: right;">
+               <div class="box box-primary" style="border-left-color:#3c8dbc">
+                  <div class="box-header with-border">
+
+                     <h3 class="box-title">Inbox</h3>
+
+                     <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                           <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                     </div>
+                     <!-- /.box-tools -->
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                     <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                           <i class="fa fa-square-o"></i>
+                        </button>
+
+                        <div class="btn-group">
+                           <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                           <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                           <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                        </div>
+                        <!-- /.btn-group -->
+
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                        <div class="pull-right">
+                           1-50/200
+                           <div class="btn-group">
+                              <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                              <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                           </div>
+                           <!-- /.btn-group -->
+                        </div>
+                        <!-- /.pull-right -->
+                     </div>
+
+                     <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped" style="border-left:2px solid; border-left-color:#3c8dbc;">
+                           <tbody>
+                              <tr>
+                                 <td>
+                                    <div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;">
+                                       <input type="checkbox" style="position: absolute; opacity: 0;">
+                                       <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                 </td>
+
+                                 <td class="mailbox-star">
+                                    <a href="#">
+                                       <i class="fa fa-star text-yellow"></i>
+                                    </a>
+                                 </td>
+                                 @if (Model != null)
+                                 {
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                       <td class="mailbox-name">
+                                          <a href="@item.From">
+                                             FROM
+                                          </a>
+                                       </td>
+
+                                       <td class="mailbox-subject">
+                                          SUBJECT <b>@item.Subject</b>
+                                       </td>
+
+                                       @*<td class="mailbox-attachment">
+                                       @item.Attachments
+                                    </td>*@
+
+                                       <td class="mailbox-date">
+                                          DATE <b>@item.DateSent</b>
+                                       </td>
+                                    </tr>
+                                 }
+                                 }
+                                 else
+                                 {
+                                       <td class="mailbox-name">
+                                       <a href="From"></a>
+                                    </td>
+
+                                    <td class="mailbox-subject">
+                                       <b>Subject</b>
+                                    </td>
+
+                                    <td class="mailbox-attachment">
+                                       Attachments
+                                    </td>
+
+                                    <td class="mailbox-date">
+                                       DateSent
+                                    </td>
+
+                                 }
+                              </tr>
+                           </tbody>
+                        </table>
+                        <!-- /.table -->
+                     </div>
+                     <!-- /.mail-box-messages -->
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer no-padding" style="border-left:1px solid; border-color: #3c8dbc;">
+                     <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                           <i class="fa fa-square-o"></i>
+                        </button>
+                        <div class="btn-group">
+                           <button type="button" class="btn btn-default btn-sm">
+                              <i class="fa fa-trash-o"></i>
+                           </button>
+                           <button type="button" class="btn btn-default btn-sm">
+                              <i class="fa fa-reply"></i>
+                           </button>
+                           <button type="button" class="btn btn-default btn-sm">
+                              <i class="fa fa-share"></i>
+                           </button>
+                        </div>
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                        <div class="pull-right">
+                           1-50/200
+                           <div class="btn-group">
+                              <button type="button" class="btn btn-default btn-sm">
+                                 <i class="fa fa-chevron-left"></i>
+                              </button>
+                              <button type="button" class="btn btn-default btn-sm">
+                                 <i class="fa fa-chevron-right"></i>
+                              </button>
+                           </div>
+                           <!-- /.btn-group -->
+                        </div>
+                        <!-- /.pull-right -->
+                     </div>
+                  </div>
+               </div>
+               <!-- /. box -->
+            </div>
+            <!-- /.col -->
+         </div>
+      }
+   </section>
+</div>
+@section Scripts {
+   @await Html.PartialAsync("_ValidationScriptsPartial")
+
+}
+
+@section Styles{
+   <style>
+      .datepicker datepicker-inline {
+         width: 100% !important;
+      }
+   </style>
+}

@@ -1,0 +1,61 @@
+﻿@model Login
+
+@inject SignInManager<GeraFin.Models.ViewModels.GeraFinWeb.ApplicationUser> SignInManager
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+@{
+   ViewData["Title"] = "Signed out";
+   UserProfile profile = context.UserProfile.SingleOrDefault(x => x.Email.Equals(User.Identity.Name));
+}
+
+<link rel="stylesheet" href="~/LockSreen/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="~/LockSreen/adminlte.min.css">
+
+<body class="hold-transition1 lockscreen" id="lkscreen1" background: #e9ecef;>
+   <div class="box-header with-border" style="background: #e9ecef;">
+      <div class="lockscreen-wrapper">
+         <div class="lockscreen-logo">
+            <a href="/Account/Signedout"><b>GERA</b>FIN</a>
+         </div>
+         <!-- User name -->
+         <div class="lockscreen-name">@profile.FirstName</div>
+         <!-- START LOCK SCREEN ITEM -->
+         <div class="lockscreen-item">
+            <!-- lockscreen image -->
+            <div class="lockscreen-image">
+               <img src="@profile.ProfilePicture" alt="User Image">
+            </div>
+            <!-- lockscreen credentials (contains the form) -->
+            <form asp-controller="Account" asp-action="Login" class="lockscreen-credentials" method="post">
+               <div class="form-group has-feedback">
+                  <div class="input-group" style="border-bottom: 1px solid; border-top: 1px solid; border-left: 1px solid; border-right: 1px solid;">
+                     
+                     <input asp-for="Email" type="email" value="@profile.Email" id="Emaild" class="form-control" placeholder="Email" hidden />
+                     <input asp-for="Password" type="password" value="" class="form-control" placeholder="Password" required />
+                     
+                     <div class="input-group-append">
+                        <button type="submit" id="SubmitBtn" class="btn" style="border-left: 1px solid;"><i class="fas fa-arrow-right text-muted"></i></button>
+                     </div>
+
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="help-block text-center">
+            Enter your password to retrieve your session
+         </div>
+      </div>
+   </div>
+</body>
+@section Scripts{
+   <script type="text/javascript" src="~/LockSreen/jquery/jquery.min.js"></script>
+   <script type="text/javascript" src="~/LockSreen/js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+
+      $(document).ready(function () {
+         // Handler for .ready() called.
+         window.setTimeout(function () {
+            location.href = "/Account/Login";
+         }, 5000);
+      });
+   </script>
+}

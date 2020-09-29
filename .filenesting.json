@@ -1,0 +1,4 @@
+@media (max-height: 1040px)
+.col-md-9 {
+    height: 75%;
+}

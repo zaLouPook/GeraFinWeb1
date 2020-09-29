@@ -1,0 +1,73 @@
+﻿@model EnableAuthenticator
+@{
+    ViewData["Title"] = "Enable authenticator";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+   <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content">
+         <!-- Default box -->
+         <div class="box">
+            <div class="box-header with-border">
+               <h3 class="box-title text-primary"><i class="fa fa-users"></i> @ViewData["Title"]</h3>
+               <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                          title="Collapse">
+                     <i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                     <i class="fa fa-times"></i>
+                  </button>
+               </div>
+            </div>
+         </div>
+         <div class="box-body" id="EnableAuthentication">
+            <div class="alert alert-info">To enable QR code generation please read our <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentation</a>.</div>
+            <div>
+               <p>To use an authenticator app go through the following steps:</p>
+               <ol class="list">
+                  <li>
+                     <p>
+                        Download a two-factor authenticator app like Microsoft Authenticator for
+                        <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
+                        <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
+                        <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
+                        Google Authenticator for
+                        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
+                        <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+                     </p>
+                  </li>
+                  <li>
+                     <p>Scan the QR Code or enter this key <kbd>@Model.SharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                     <div id="qrCode"></div>
+                     <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
+                  </li>
+                  <li>
+                     <p>
+                        Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
+                        with a unique code. Enter the code in the confirmation box below.
+                     </p>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <form method="post">
+                              <div class="form-group">
+                                 <label asp-for="Code" class="control-label">Verification Code</label>
+                                 <input asp-for="Code" class="form-control" autocomplete="off" />
+                                 <span asp-validation-for="Code" class="text-danger"></span>
+                              </div>
+                              <button type="submit" class="btn btn-default">Verify</button>
+                              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                           </form>
+                        </div>
+                     </div>
+                  </li>
+               </ol>
+            </div>
+         </div>
+      </section>
+   </div>
+
+      @section Scripts {
+         @await Html.PartialAsync("_ValidationScriptsPartial")
+      }

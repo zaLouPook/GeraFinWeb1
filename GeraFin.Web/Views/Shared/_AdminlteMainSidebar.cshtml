@@ -1,0 +1,465 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model GeraFin.Models.ViewModels.GeraFinWeb.ApplicationUser
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+
+@{
+   UserProfile Profile = new UserProfile();
+   Profile = context.UserProfile.SingleOrDefault(x => x.ApplicationUserId.Equals(Model.Id));
+   List<UserTasks> UserTasks = context.UserTasks.Where(x => x.UserId.Equals(Profile.UserProfileId) && x.MarkCompleted == false).ToList();
+}
+
+<script type="text/javascript">
+
+   window.addEventListener("load", function () {
+      // For Treeview
+      var url = window.location;
+      //url = this.document.referrer;
+
+      $('ul.treeview-menu a').filter(function () {
+         return this.href == url;
+      }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+
+      if (parent = this.document.referrer) {
+
+         $('ul.treeview-menu').filter(function () {
+            return this.href == url;
+         }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+      }
+   });
+
+</script>
+@*<script type="text/javascript" src="~/lib/signalr/signalr.min.js"></script>
+   <script type="text/javascript" src="~/lib/signalr/signalr.js"></script>*@
+
+<aside class="main-sidebar">
+   <!-- sidebar: style can be found in sidebar.less -->
+   <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+         <div class="pull-left image">
+            <img src="@Profile.ProfilePicture" class="img-circle" alt="User Image">
+         </div>
+         <div class="pull-left info">
+            <p>@Profile.FirstName @Profile.LastName</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+         </div>
+      </div>
+
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+         <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn" style="border-radius: 20px;">
+               <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+               </button>
+            </span>
+         </div>
+      </form>
+
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--GMail-->
+         @*<li class="treeview" id="GMail" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i><span class="header" id="GMail">MailBox</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+            <ul class="treeview-menu" id="GMail">
+
+               <li class="@Html.IsSelected(controller: MainMenu.Inbox.ControllerName)" id="@MainMenu.Inbox.ControllerName">
+                  <a href="@MainMenu.Inbox.Path" onclick="StayActive()">
+                     <i class="fa fa-building-o"></i> <span>@MainMenu.Inbox.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.Read.ControllerName)" id="@MainMenu.Read.ControllerName">
+                  <a href="@MainMenu.Read.Path" onclick="StayActive()">
+                     <i class="fa fa-building-o"></i> <span>@MainMenu.Read.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.Compose.ControllerName)" id="@MainMenu.Compose.ControllerName">
+                  <a href="@MainMenu.Compose.Path" onclick="StayActive()">
+                     <i class="fa fa-building-o"></i> <span>@MainMenu.Compose.PageName</span>
+                  </a>
+               </li>
+            </ul>
+         </li>*@
+      </ul>
+
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--INCOME-->
+         <li class="treeview" id="Income" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i>
+               <span class="header">Income</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+
+            <ul class="treeview-menu" id="IncomeMenu">
+
+               <li class="@Html.IsSelected(controller: MainMenu.BranchGP.ControllerName)" id="@MainMenu.BranchGP.ControllerName)">
+                  <a href="@MainMenu.BranchGP.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.BranchGP.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.DailyIncome.ControllerName)" id="@MainMenu.DailyIncome.ControllerName)">
+                  <a href="@MainMenu.DailyIncome.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.DailyIncome.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.Weeklysignoff.ControllerName)" id="@MainMenu.Weeklysignoff.ControllerName)">
+                  <a href="@MainMenu.Weeklysignoff.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.Weeklysignoff.PageName</span>
+                  </a>
+               </li>
+
+            </ul>
+         </li>
+      </ul>
+
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--DAILY Issue-->
+         <li class="treeview" id="Issue" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i>
+               <span class="header">Issues</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+
+            <ul class="treeview-menu" id="IssueMenu">
+
+               <li class="@Html.IsSelected(controller: MainMenu.DailyIssues.ControllerName)" id="@MainMenu.DailyIssues.ControllerName)">
+                  <a href="@MainMenu.DailyIssues.Path">
+                     <i class="fa fa-pie-chart"></i> <span>@MainMenu.DailyIssues.PageName</span>
+                  </a>
+               </li>
+
+            </ul>
+         </li>
+      </ul>
+
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--PURCHASE-->
+         <li class="treeview" id="Purchase" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i><span class="header" id="Purchase">Purchase</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+            <ul class="treeview-menu" id="PurchaseMenu">
+
+               <li class="@Html.IsSelected(controller: MainMenu.CreditedLines.ControllerName)" id="@MainMenu.CreditedLines.ControllerName">
+                  <a href="@MainMenu.CreditedLines.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.CreditedLines.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.StockTransfer.ControllerName)" id="@MainMenu.StockTransfer.ControllerName">
+                  <a href="@MainMenu.StockTransfer.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.StockTransfer.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.PurchaseOrder.ControllerName)" id="@MainMenu.PurchaseOrder.ControllerName">
+                  <a href="@MainMenu.PurchaseOrder.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.PurchaseOrder.PageName</span>
+                  </a>
+               </li>
+
+               <li class="@Html.IsSelected(controller: MainMenu.PurchaseSummary.ControllerName)" id="@MainMenu.PurchaseSummary.ControllerName">
+                  <a href="@MainMenu.PurchaseSummary.Path">
+                     <i class="fa fa-certificate"></i> <span>@MainMenu.PurchaseSummary.PageName</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--INVENTORY-->
+         <li class="treeview" id="Inventory" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i><span class="header" id="Inventory">Inventory</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+
+            <ul class="treeview-menu" id="InventoryMenu">
+               
+               <!--PRODUCT-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Product"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Product.ControllerName)" id="@MainMenu.Product.ControllerName">
+                     <a href="@MainMenu.Product.Path">
+                        <i class="fa fa-certificate"></i> <span>@MainMenu.Product.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--EXCEL-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Excel"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Excel.ControllerName)" id="@MainMenu.Excel.ControllerName">
+                     <a href="@MainMenu.Excel.Path">
+                        <i class="fa fa-certificate"></i> <span>@MainMenu.Excel.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--SPECIALS-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Specials"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Specials.ControllerName)" id="@MainMenu.Specials.ControllerName">
+                     <a href="@MainMenu.Specials.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.Specials.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--STOCKTAKE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Stock Take"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.StockTake.ControllerName)" id="@MainMenu.StockTake.ControllerName">
+                     <a href="@MainMenu.StockTake.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.StockTake.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--STOCK-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Stock On Hand"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Stock.ControllerName)" id="@MainMenu.Stock.ControllerName">
+                     <a href="@MainMenu.Stock.Path">
+                        <i class="fa fa-certificate"></i> <span>@MainMenu.Stock.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--UOM-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Unit Of Measure"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.UnitOfMeasure.ControllerName)" id="@MainMenu.UnitOfMeasure.ControllerName">
+                     <a href="@MainMenu.UnitOfMeasure.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.UnitOfMeasure.PageName</span>
+                     </a>
+                  </li>
+               }
+            </ul>
+         </li>
+      </ul>
+      <ul class="sidebar-menu" data-widget="tree">
+         <!--config-->
+         <li class="treeview" id="config" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i><span class="header" id="config">Config</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+            <ul class="treeview-menu" id="ConfigMenu">
+               
+               <!--PURCHASE TYPE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Purchase Type"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.PurchaseType.ControllerName)" id="@MainMenu.PurchaseType.ControllerName">
+                     <a href="@MainMenu.PurchaseType.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.PurchaseType.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--PRODUCT TYPE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Product Type"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.ProductType.ControllerName)" id="@MainMenu.ProductType.ControllerName">
+                     <a href="@MainMenu.ProductType.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.ProductType.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--TRANSACTION TYPE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Transaction Type"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.TransactionType.ControllerName)" id="@MainMenu.TransactionType.ControllerName">
+                     <a href="@MainMenu.TransactionType.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.TransactionType.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--CHANGE ROLE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Change Role"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.ChangeRole.ControllerName, action: MainMenu.ChangeRole.ActionName)" id="@MainMenu.ChangeRole.ControllerName">
+                     <a href="@MainMenu.ChangeRole.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.ChangeRole.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--MY BRANCH-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("My Branches"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.MyBranches.ControllerName)" id="@MainMenu.MyBranches.ControllerName">
+                     <a href="@MainMenu.MyBranches.Path">
+                        <i class="fa fa-pie-chart"></i><span>@MainMenu.MyBranches.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--USER-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("User"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.User.ControllerName, action: MainMenu.User.ActionName)" id="@MainMenu.User.ControllerName">
+                     <a href="@MainMenu.User.Path">
+                        <i class="fa fa-users"></i> <span>@MainMenu.User.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--ROLE-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Role"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Role.ControllerName, action: MainMenu.Role.ActionName)" id="@MainMenu.Role.ControllerName">
+                     <a href="@MainMenu.Role.Path">
+                        <i class="fa fa-gear"></i> <span>@MainMenu.Role.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--BRANCHES-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Branch"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Branch.ControllerName)" id="@MainMenu.Branch.ControllerName">
+                     <a href="@MainMenu.Branch.Path">
+                        <i class="fa fa-building"></i> <span>@MainMenu.Branch.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--VENDOR-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Suppliers"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.Vendor.ControllerName)" id="@MainMenu.Vendor.ControllerName">
+                     <a href="@MainMenu.Vendor.Path">
+                        <i class="fa fa-building-o"></i> <span>@MainMenu.Vendor.PageName</span>
+                     </a>
+                  </li>
+               }
+
+               <!--CHANGE PASSWORD-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Change Password"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.ChangePassword.ControllerName, action: MainMenu.ChangePassword.ActionName)" id="@MainMenu.ChangePassword.ControllerName">
+                     <a href="@MainMenu.ChangePassword.Path" id="ChangePassword">
+                        <i class="fa fa-key"></i> <span>@MainMenu.ChangePassword.PageName</span>
+                     </a>
+                  </li>
+               }
+            </ul>
+         </li>
+      </ul>
+      <!--Manage-->
+      @*<ul class="sidebar-menu" data-widget="tree">
+      <li class="treeview" id="Manage" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+         <a href="#">
+            <i class="fa fa-dashboard"></i><span class="header" id="Manage">Manage</span>
+            <span class="pull-right-container">
+               <i class="fa fa-angle-left pull-right"></i>
+            </span>
+         </a>
+         <ul class="treeview-menu" id="Manage">*@
+
+      <!--ExternalLogins-->
+      @*<li class="@Html.IsSelected(controller: MainMenu.ExternalLogins.ControllerName, action: MainMenu.ExternalLogins.ActionName)" id="@MainMenu.ExternalLogins.ControllerName">
+         <a href="@MainMenu.ExternalLogins.Path" id="ExternalLogins">
+            <i class="fa fa-key"></i> <span>@MainMenu.ExternalLogins.PageName</span>
+         </a>
+      </li>*@
+
+      <!--EnableAuthenticator-->
+      @*<li class="@Html.IsSelected(controller: MainMenu.EnableAuthenticator.ControllerName, action: MainMenu.EnableAuthenticator.ActionName)" id="@MainMenu.EnableAuthenticator.ControllerName">
+         <a href="@MainMenu.EnableAuthenticator.Path" id="EnableAuthenticator">
+            <i class="fa fa-key"></i> <span>@MainMenu.EnableAuthenticator.PageName</span>
+         </a>
+      </li>*@
+
+      <!--ShowRecoveryCodes-->
+      @*<li class="@Html.IsSelected(controller: MainMenu.ShowRecoveryCodes.ControllerName, action: MainMenu.ShowRecoveryCodes.ActionName)" id="@MainMenu.ShowRecoveryCodes.ControllerName">
+         <a href="@MainMenu.ShowRecoveryCodes.Path" id="ShowRecoveryCodes">
+            <i class="fa fa-key"></i> <span>@MainMenu.ShowRecoveryCodes.PageName</span>
+         </a>
+      </li>*@
+
+      <!--TwoFactorAuthentication-->
+      @*<li class="@Html.IsSelected(controller: MainMenu.TwoFactorAuthentication.ControllerName, action: MainMenu.TwoFactorAuthentication.ActionName)" id="@MainMenu.TwoFactorAuthentication.ControllerName">
+         <a href="@MainMenu.TwoFactorAuthentication.Path" id="TwoFactorAuthentication">
+            <i class="fa fa-key"></i> <span>@MainMenu.TwoFactorAuthentication.PageName</span>
+         </a>
+      </li>*@
+
+      @*</ul>
+         </li>
+      </ul>*@
+      <ul class="sidebar-menu" data-widget="tree">
+         <li class="treeview" id="User" style="color: #ffffff; background: #3c8dbc; border-bottom: 2px solid; border-bottom-color: black;">
+            <a href="#">
+               <i class="fa fa-dashboard"></i><span class="header" id="User">User</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+            <ul class="treeview-menu" id="User">
+
+               <!--User-->
+               @if (HttpContextAccessor.HttpContext.User.IsInRole("Gera Fin User"))
+               {
+                  <li class="@Html.IsSelected(controller: MainMenu.GeraFinUser.ControllerName, action: MainMenu.GeraFinUser.ActionName)" id="@MainMenu.GeraFinUser.ControllerName">
+                     <a href="@MainMenu.GeraFinUser.Path" id="GeraFinUser">
+                        <i class="fa fa-key"></i>
+                        <span>@MainMenu.GeraFinUser.PageName</span>
+                        <span class="pull-right-container">
+                           @if (UserTasks.Count() > 0)
+                           {
+                              <small class="label pull-right bg-green">@UserTasks.Count() New</small>
+                           }
+                        </span>
+                     </a>
+                  </li>
+               }
+                  <!--UserEvents -->
+                  @if (HttpContextAccessor.HttpContext.User.IsInRole("Events Calendar"))
+                  {
+                     <li class="@Html.IsSelected(controller: MainMenu.EventsCalendar.ControllerName, action: MainMenu.EventsCalendar.ActionName)" id="@MainMenu.EventsCalendar.ControllerName">
+                        <a href="@MainMenu.EventsCalendar.Path" id="GeraFinUser">
+                           <i class="fa fa-key"></i> <span>@MainMenu.EventsCalendar.PageName</span>
+                        </a>
+                     </li>
+                  }
+               </ul>
+         </li>
+      </ul>
+   </section>
+   @section Styles{
+
+   }
+
+   @section Scripts{
+
+
+   }
+</aside>

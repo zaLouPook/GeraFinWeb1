@@ -1,0 +1,13 @@
+﻿@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+
+@{ 
+    string Appversion = context.ApplicationDetails.Select(x => x.ApplicationVersion).SingleOrDefault();
+}
+
+<footer class="main-footer">
+   <div class="pull-right hidden-xs">
+      <b>Version: </b> @Appversion
+   </div>
+   <strong><a href="http://www.GeraFinWeb.co.za">GERAFIN</a></strong>
+</footer>
+

@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject SignInManager<GeraFin.Models.ViewModels.GeraFinWeb.ApplicationUser> signInManager
+@inject UserManager<GeraFin.Models.ViewModels.GeraFinWeb.ApplicationUser> userManager
+@inject GeraFin.DAL.DataAccess.ApplicationDbContext context
+@{
+   GeraFin.Models.ViewModels.GeraFinWeb.ApplicationUser AppUser = await userManager.GetUserAsync(User);
+}
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+   <title>@ViewData["Title"] - Inventory</title>
+   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+   @Html.Partial("_AdminlteNetcoreBasicStylesNew")
+   @RenderSection("Styles", required: false)
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+   <div class="wrapper">
+
+      <div id="loader"></div>
+
+      <!--INFO MODEL-->
+      <div class="modal modal-info fade" id="modal-info" style="display: none;">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 style="text-align:center" class="modal-title">Delete Confirmation</h4>
+               </div>
+               <div class="modal-body">
+                  <p style="text-align:center; font-size: 12px;">The Selected Records Have Been Deleted Sucsessfully!</p>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button" class="btn btn-outline" data-dismiss="modal" style="text-align:center">Close</button>
+                  @*<button type="button" class="btn btn-outline pull-right" data-dismiss="modal">Yes</button>*@
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="DoPostBack" style="display: none;"></div>
+      <!--WARNING MODEL-->
+      <div class="modal modal-warning fade" id="modal-warning">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 style="text-align:center" class="modal-title">New Stock Transfer Recieved</h4>
+               </div>
+               <div class="modal-body">
+                  <p id="ModelBodyDisplayText" style="text-align:center;font-size: xx-large;">New Stock Transfer Recieved From: @GeraFin.Controllers.Api.GeraFinUserController.BranchName</p>
+                  <p id="TransferItemNam" style="text-align:left; font-size: large; margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 2px;">Transfer Item Name: @GeraFin.Controllers.Api.GeraFinUserController.TransferItem</p>
+                  <p id="TransferItemQTY" style="text-align:left; font-size: large; margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 2px;">Transfer Item Qty &nbsp;&nbsp;&nbsp;: @GeraFin.Controllers.Api.GeraFinUserController.TransQTY</p>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button" id="StocktransferConfirm" class="btn btn-outline" data-dismiss="modal" style="text-align:center">Ok</button>
+                  @*<button type="button" class="btn btn-outline">Save changes</button>*@
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!--SUCCESS MODEL-->
+      <div class="modal modal-success fade" id="modal-success">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title">Success Modal</h4>
+               </div>
+               <div class="modal-body">
+                  <p>One fine body…</p>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-outline">Ok</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!--FAIL MODEL-->
+      <div class="modal modal-danger fade" id="modal-danger">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title" style="text-align:center">Available Quantity Error</h4>
+               </div>
+               <div class="modal-body">
+                  <p style="text-align:center">Available Quantity is less than selected Quantity</p>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button" style="text-align:center" class="btn btn-outline" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!--INFO MODEL-->
+      <div class="modal modal-danger fade" id="modal-admin" style="display: none;">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 style="text-align:center" class="modal-title">Welcome @User.Identity.Name !</h4>
+               </div>
+               <div class="modal-body">
+                  <p style="text-align:center; font-size: 12px;">Please enable the branch you would like to view.</p>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button" class="btn btn-outline" data-dismiss="modal" style="text-align:center">Close</button>
+                  @*<button type="button" class="btn btn-outline pull-right" data-dismiss="modal">Yes</button>*@
+               </div>
+            </div>
+         </div>
+      </div>
+      @{await Html.RenderPartialAsync("_AdminlteMainHeader", AppUser); }
+      @{await Html.RenderPartialAsync("_AdminlteMainSidebar", AppUser); }
+      @{await Html.RenderPartialAsync("_CookieConsentPartial"); }
+      @RenderBody()
+      @{await Html.RenderPartialAsync("_AdminlteFooter"); }
+   </div>
+
+   @Html.Partial("_AdminlteNetcoreBasicScriptsNew")
+
+   <script>
+      $.widget.bridge('uibutton', $.ui.button);
+
+      document.getElementById("StocktransferConfirm").addEventListener("click", function () {
+         $("#SubmitHidden").submit();
+      });
+
+      if ('@HttpContextAccessor.HttpContext.Session.GetString("_Name")' == '') {
+
+         @{await Html.RenderPartialAsync("_CookieConsentPartial"); }
+
+         if ('@HttpContextAccessor.HttpContext.Session.GetString("_Name")' == '') {
+
+            if (confirm("Your session was expired !")) {
+               window.location.href = "/Account/Login";
+            }
+         }
+      }
+   </script>
+
+   @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+
+
