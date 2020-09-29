@@ -112,7 +112,8 @@
                    columns: [
                       { field: "GPId", headerText: 'GPId', isPrimaryKey: true, isIdentity: true, visible: false },
                       { field: "BranchId", headerText: 'Unit', foreignKeyField: "BranchId", defaultValue: 1, foreignKeyValue: "BranchName", dataSource: dataManagerBranch, visible: Permission },
-                      { field: "Day", headerText: 'Day' },
+                       { field: "Day", headerText: 'Day' },
+                       { field: "BudgetGP%", headerText: 'BudgetGP%' },
                       { field: "Month", headerText: 'Month' },
                       { field: "Income", headerText: 'Income', editType: "numericedit", format: "R" + " " + "{0:n2}" },
                       { field: "Costs", headerText: 'Costs', editType: "numericedit", format: "R" + " " + "{0:n2}" },
